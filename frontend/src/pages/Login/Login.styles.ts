@@ -9,7 +9,7 @@ export const PageContainer = styled('main')`
   padding: 0 2em;
 `
 
-export const FormWrapper = styled('form')`
+export const FormWrapper = styled('div')`
   width: 20em;
   max-width: 100%;
   display: flex;
@@ -21,4 +21,8 @@ export const FormWrapper = styled('form')`
 
 export const Title = styled('h1')`
   font-weight: bold;
+`
+
+export const Error = styled('span')`
+  color: var(--red);
 `

@@ -1,15 +1,16 @@
 import { FC } from "react";
 import { SocialIcon, StyledLoginButton } from "./SocialLoginButton.styles";
+import { Spinner } from "..";
 
-interface SocialLoginButtonProps {
+interface SocialLoginButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  loading?: boolean
   text: string
   src: string
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
 } 
-const SocialLoginButton: FC<SocialLoginButtonProps> = ({text, src, onClick}: SocialLoginButtonProps) => (
-  <StyledLoginButton type='submit' onClick={onClick}>
-    <SocialIcon src={src}></SocialIcon>
-    {text}
+
+const SocialLoginButton: FC<SocialLoginButtonProps> = ({loading, text, src, ...rest}: SocialLoginButtonProps) => (
+  <StyledLoginButton {...rest}>
+    {loading ? <Spinner /> : <><SocialIcon src={src} /> {text}</>}
   </StyledLoginButton>
 )
 

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Error, FormWrapper, PageContainer, Title } from './Login.styles'
 import { SocialLoginButton } from '/src/components'
-import { supabase } from '/src/lib'
+import { supabase } from '/src/libs'
 
 const Login = () => {
   const [isGitHubLoading, setIsGitHubLoading] = useState(false)

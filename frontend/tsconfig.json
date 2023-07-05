@@ -8,6 +8,7 @@
     "paths": {
       "/*": ["./*"]
     },
+    "baseUrl": "./",
     
     /* Bundler mode */
     "moduleResolution": "bundler",

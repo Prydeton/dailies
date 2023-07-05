@@ -1,7 +1,8 @@
-import { AuthError, OAuthResponse, Session } from "@supabase/supabase-js";
-import { supabase } from "../libs";
-import { create } from "zustand";
-import { useEffect } from "react";
+import { useEffect } from 'react'
+import { AuthError, OAuthResponse, Session } from '@supabase/supabase-js'
+import { create } from 'zustand'
+
+import { supabase } from '/src/libs'
 
 export type supportedOAuthProviers = 'google' | 'github'
 
@@ -16,10 +17,10 @@ interface AuthStore {
 
 export const useAuthStore = create<AuthStore>()(set => ({
   session: null,
-  setSession: (session) => set({ session }),
+  setSession: session => set({ session }),
   isAuthLoading: true,
-  setIsAuthLoading: (isAuthLoading) => set({ isAuthLoading }),
-  signInWithOAuth: (provider) => supabase.auth.signInWithOAuth({
+  setIsAuthLoading: isAuthLoading => set({ isAuthLoading }),
+  signInWithOAuth: provider => supabase.auth.signInWithOAuth({
     provider: provider,
     options: {
       redirectTo: 'http://localhost:5173'

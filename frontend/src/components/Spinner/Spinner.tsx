@@ -1,4 +1,5 @@
 import { CSSProperties, FC } from 'react'
+
 import { Center, Ring } from './Spinner.styles'
 
 interface SpinnerProps {

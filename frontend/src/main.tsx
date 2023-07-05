@@ -1,7 +1,8 @@
 import React, { createElement } from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
 import { setup } from 'goober'
+
+import App from './App.tsx'
 
 // Setup Goober
 setup(createElement)

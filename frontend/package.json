@@ -8,6 +8,7 @@
     "build": "tsc && vite build"
   },
   "dependencies": {
+    "goober": "^2.1.13",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "wouter": "^2.11.0"

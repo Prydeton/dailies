@@ -1,7 +1,7 @@
 import { Route } from 'wouter'
 
 import { useAuthSetup } from './hooks/useAuth'
-import { Login, Main } from './pages'
+import { Calendar, Login } from './pages'
 import './App.css'
 
 const App = () => {
@@ -9,7 +9,7 @@ const App = () => {
 
   return (<>
     <Route path="/login" component={Login} />
-    <Route path="/" component={Main} />
+    <Route path="/" component={Calendar} />
   </>)
 }
 

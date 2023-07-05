@@ -1,3 +1,4 @@
+import { CSSProperties, FC } from 'react'
 import { Center, Ring } from './Spinner.styles'
 
 interface SpinnerProps {
@@ -6,13 +7,13 @@ interface SpinnerProps {
   center?: boolean
 }
 
-const Spinner: React.FC<SpinnerProps> = ({
+const Spinner: FC<SpinnerProps> = ({
   size = '24px',
   center,
 }) => {
   const style = {
     fontSize: size,
-  } as React.CSSProperties
+  } as CSSProperties
 
   if (center) return <Center><Ring style={style} /></Center>
 

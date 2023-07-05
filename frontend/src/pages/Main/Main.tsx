@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { useAuthStore } from "/src/hooks/useAuth"
 import { useLocation } from "wouter";
+import { Header } from "/src/components";
 
 const Main = () => {
   const { isAuthLoading, session, signOut } = useAuthStore()
@@ -17,7 +18,7 @@ const Main = () => {
   }
 
   return (<>
-    Logged in
+    <Header />
     <button onClick={() => handleSignout()} />
   </>)
 }

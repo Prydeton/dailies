@@ -2,10 +2,10 @@ import { useEffect } from 'react'
 import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useLocation } from 'wouter'
 
-import { Header } from '/src/components'
+import { DayGlobe, Header } from '/src/components'
 import { useAuthStore } from '/src/hooks/useAuth'
 
-import { ControlButton, ControlMonth, ControlsContainer } from './Calendar.styles'
+import { ControlButton, ControlMonth, ControlsContainer, MonthContainer } from './Calendar.styles'
 
 const Main = () => {
   const { isAuthLoading, session, signOut } = useAuthStore()
@@ -49,8 +49,11 @@ const Main = () => {
         onClick={(() => console.log('End Right'))}>
         <ChevronLast />
       </ControlButton>
-
     </ControlsContainer>
+
+    <MonthContainer>
+      {[...Array(30)].map((_, index) => (<DayGlobe key={index} />))}
+    </MonthContainer>
     <button onClick={() => handleSignout()} />
   </>)
 }

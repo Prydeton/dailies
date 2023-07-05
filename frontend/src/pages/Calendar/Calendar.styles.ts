@@ -39,3 +39,11 @@ export const ControlMonth = styled('h2')`
   place-content: center;
   letter-spacing: 5px;
 `
+
+export const MonthContainer = styled('div')`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 71px);
+  justify-content: space-between;
+  gap: 1em;
+  padding: 20px;
+`

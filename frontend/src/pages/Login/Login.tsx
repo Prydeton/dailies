@@ -4,12 +4,9 @@ import { SocialLoginButton } from '/src/components'
 import { supabase } from '/src/libs'
 
 const Login = () => {
-  const [isGitHubLoading, setIsGitHubLoading] = useState(false)
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const [loginError, setLoginError] = useState<string>()
 
   const handleSignInWithProvider = async (provider: 'google' | 'github') => {
-    provider === 'google' ? setIsGoogleLoading(true) : setIsGitHubLoading(true)
     const { error } = await supabase.auth.signInWithOAuth({
       provider: provider,
       options: {
@@ -17,8 +14,6 @@ const Login = () => {
       }
     })
     setLoginError(error?.message)
-    setIsGoogleLoading(false)
-    setIsGitHubLoading(false)
   }
 
   return (<PageContainer>
@@ -28,15 +23,11 @@ const Login = () => {
         text='Continue with Google' 
         src='/google-icon.png'
         onClick={() => handleSignInWithProvider('google')}
-        disabled={isGoogleLoading || isGitHubLoading}
-        loading={isGoogleLoading}
       />
       <SocialLoginButton 
         text='Continue with GitHub' 
         src='/github-icon.png'
         onClick={() => handleSignInWithProvider('github')}
-        disabled={isGoogleLoading || isGitHubLoading}
-        loading={isGitHubLoading}
       />
       {loginError && <Error>{loginError}</Error>}
     </FormWrapper>

@@ -5,7 +5,7 @@ import { useLocation } from "wouter";
 const Main = () => {
   const { isAuthLoading, session, signOut } = useAuthStore()
   const [location, setLocation] = useLocation();
-  console.log(isAuthLoading)
+
   useEffect(() => {
     if (!isAuthLoading && !session) {
       setLocation('/login')
@@ -13,7 +13,6 @@ const Main = () => {
   }, [isAuthLoading, session])
 
   const handleSignout = () => {
-    console.log("test")
     signOut()
   }
 

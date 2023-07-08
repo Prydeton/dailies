@@ -1,14 +1,36 @@
-use std::net::SocketAddr;
+use std::{net::SocketAddr, sync::Arc};
 
 use axum::{
-  routing::{get}, Router, Json, Server,
+  routing::{get}, Router, Json, Server, extract,
 };
+use db::connect_to_database;
+use postgrest::Postgrest;
+use routes::get_calendar;
+use tokio::sync::Mutex;
 
+mod routes;
+mod payloads;
+mod error;
+mod db;
+
+pub struct ApiState {
+  db: Postgrest
+}
+
+pub type State = extract::State<Arc<Mutex<ApiState>>>;
 
 #[tokio::main]
 async fn main() {
+  dotenvy::dotenv().ok();
+
+  let shared_state = Arc::new(Mutex::new(ApiState{
+    db: connect_to_database().await
+  }));
+
   let app = Router::new()
-    .route("/ping", get(ping_handler));
+    .route("/ping", get(ping_handler))
+    .route("/calendar", get(get_calendar::get_calendar))
+    .with_state(shared_state);
 
   let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
 

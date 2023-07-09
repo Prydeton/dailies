@@ -2,3 +2,4 @@ export { default as SocialLoginButton } from './SocialLoginButton/SocialLoginBut
 export { default as Spinner } from './Spinner/Spinner'
 export { default as Header } from './Header/Header'
 export { default as DayGlobe } from './DayGlobe/DayGlobe'
+export { default as CheckListItem } from './CheckListItem/CheckListItem'

@@ -31,6 +31,8 @@ export const PageContainer = styled('div')`
   left: 0;
   z-index: 2;
   box-shadow: 0 2px 40px 0 rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
 
   &.open {
     transform: translateY(0%);
@@ -41,4 +43,27 @@ export const PageContainer = styled('div')`
     transform: translateY(100%);
     transition: transform .5s;
   }
+`
+
+export const Wrapper = styled('div')`
+  height: 100%;
+  width: 100%;
+  max-height: 800;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+
+  h2 { 
+    margin: 0px 0px 10px 0px;
+    font-size: 1.8em;
+    font-weight: normal;
+  }
+`
+
+export const Handle = styled('div')`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10%;
 `

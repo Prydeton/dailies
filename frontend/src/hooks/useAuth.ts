@@ -48,3 +48,4 @@ export const useAuthSetup = () => {
   }, [])
 }
 
+export default useAuthStore

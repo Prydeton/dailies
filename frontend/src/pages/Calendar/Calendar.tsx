@@ -2,20 +2,23 @@ import { useEffect } from 'react'
 import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useLocation } from 'wouter'
 
-import { DayGlobe, Header } from '/src/components'
+import { DayGlobe, Header, Spinner } from '/src/components'
+import { useCalendarStore } from '/src/hooks'
 import { useAuthStore } from '/src/hooks/useAuth'
 
 import { ControlButton, ControlMonth, ControlsContainer, MonthContainer } from './Calendar.styles'
 
 const Main = () => {
   const { isAuthLoading, session, signOut } = useAuthStore()
-  const [location, setLocation] = useLocation()
-
+  const { calendar, loading: isCalendarLoading, getCalendar } = useCalendarStore()
+  const [_, setLocation] = useLocation()
+  console.log(calendar)
   useEffect(() => {
-    if (!isAuthLoading && !session) {
-      setLocation('/login')
+    if (!isAuthLoading) {
+      !session ? setLocation('/login') : getCalendar()
     }
   }, [isAuthLoading, session])
+
 
   const handleSignout = () => {
     signOut()
@@ -52,7 +55,11 @@ const Main = () => {
     </ControlsContainer>
 
     <MonthContainer>
-      {[...Array(30)].map((_, index) => (<DayGlobe key={index} />))}
+      {isCalendarLoading || !calendar ?
+        <Spinner center={true} /> : <>
+          {Object.entries(calendar).forEach(([date, tasks]) => (<DayGlobe key={date} />))}
+        </>
+      }
     </MonthContainer>
     <button onClick={() => handleSignout()} />
   </>)

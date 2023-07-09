@@ -2,10 +2,10 @@ import { z } from 'zod'
 
 import { env } from '.'
 
-const get = async <S extends z.Schema>(url: string, schema: S, bearer_token: string): Promise<ReturnType<S['parse']>> => {
+const get = async <S extends z.Schema>(url: string, schema: S, access_token: string): Promise<ReturnType<S['parse']>> => {
   const res = await fetch(new URL(url, env.API_URL), {
     headers: {
-      Authorization: `Bearer ${bearer_token}`,
+      Authorization: `Bearer ${access_token}`,
     },
   })
     .catch(console.warn)
@@ -24,9 +24,8 @@ export const Task = z.object({
 })
 export type Task = z.infer<typeof Task>
 
-export const CalendarResponse = z.object({
-  _value: z.array(Task),
-})
-export type CalendarResponse = z.infer<typeof CalendarResponse>
+export const Calendar = z.record(z.string(), z.array(Task))
 
-export const getCalendar = (bearer_token: string) => get('/calendar', CalendarResponse, bearer_token)
+export type Calendar = z.infer<typeof Calendar>
+
+export const getCalendar = (access_token: string) => get('/calendar', Calendar, access_token)

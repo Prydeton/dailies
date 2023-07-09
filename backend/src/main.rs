@@ -31,7 +31,7 @@ async fn main() {
   let cors = CorsLayer::new()
     .allow_headers([AUTHORIZATION])
     .allow_methods([Method::GET, Method::PATCH])
-    .allow_origin("http://localhost:1234".to_owned().parse::<HeaderValue>().unwrap());
+    .allow_origin("http://localhost:5173".to_owned().parse::<HeaderValue>().unwrap());
     
   let app = Router::new()
     .route("/ping", get(ping_handler))

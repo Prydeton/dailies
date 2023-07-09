@@ -2,6 +2,7 @@ use axum::{response::{Response, IntoResponse}, http::StatusCode, body::{BoxBody,
 
 pub enum ApiError {
   PostgrestrsError(String),
+  NotAuthorized,
 }
 
 impl IntoResponse for ApiError {
@@ -16,7 +17,8 @@ impl IntoResponse for ApiError {
                   .unwrap();
 
               response.into_response()
-          }
+          },
+          ApiError::NotAuthorized => StatusCode::UNAUTHORIZED.into_response(),
       }
   }
 }

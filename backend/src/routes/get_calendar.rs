@@ -2,7 +2,7 @@ use std::{sync::Arc, collections::HashMap};
 use serde_json::{from_str};
 use tokio::sync::Mutex;
 use chrono::prelude::*;
-use axum::{extract::State, Json};
+use axum::{extract::State, Json, Extension};
 use uuid::Uuid;
 
 use crate::{
@@ -11,7 +11,8 @@ use crate::{
   ApiState,
 };
 
-pub async fn get_calendar(state: State<Arc<Mutex<ApiState>>>) -> ApiResult<Calendar> {
+pub async fn get_calendar(state: State<Arc<Mutex<ApiState>>>, Extension(user_id): Extension<String>) -> ApiResult<Calendar> {
+  println!("{user_id}");
   let db = &state.lock().await.db;
 
   let res = db

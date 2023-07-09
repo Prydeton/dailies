@@ -1,12 +1,13 @@
 use std::{net::SocketAddr, sync::Arc};
 
 use axum::{
-  routing::{get, patch}, Router, Json, Server, extract,
+  routing::{get, patch}, Router, Json, Server, extract, http::{header::AUTHORIZATION, Method, HeaderValue},
 };
 use db::connect_to_database;
 use postgrest::Postgrest;
 use routes::{get_calendar::get_calendar, update_tasks::update_tasks};
 use tokio::sync::Mutex;
+use tower_http::cors::CorsLayer;
 
 mod routes;
 mod payloads;
@@ -27,11 +28,17 @@ async fn main() {
     db: connect_to_database().await
   }));
 
+  let cors = CorsLayer::new()
+    .allow_headers([AUTHORIZATION])
+    .allow_methods([Method::GET, Method::PATCH])
+    .allow_origin("http://localhost:1234".to_owned().parse::<HeaderValue>().unwrap());
+    
   let app = Router::new()
     .route("/ping", get(ping_handler))
     .route("/calendar", get(get_calendar))
     .route("/tasks", patch(update_tasks))
-    .with_state(shared_state);
+    .with_state(shared_state)
+    .layer(cors);
 
   let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
 

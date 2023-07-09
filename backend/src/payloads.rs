@@ -1,20 +1,22 @@
 //use std::collections::HashMap;
 
+use std::{collections::HashMap};
+
 use axum::Json;
 use serde::{Serialize, Deserialize};
 use crate::error::ApiError;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Task {
-  id: i32,
-  user_id: i32,
-  name: String,
-  is_complete: bool,
-  date: String,
-  order: i32,
+  pub id: String,
+  pub user_id: String,
+  pub name: String,
+  pub is_complete: bool,
+  pub date: String,
+  pub order: i32,
 }
 
-pub type ApiResult<T> = Result<Json<T>, ApiError>;
+#[derive(Clone, Serialize, Deserialize)]
+pub struct Calendar(pub HashMap<String, Vec<Task>>);
 
-//pub struct GetCalendarResponse (/<String, Vec<Task>>);
-pub type GetCalendarResponse = String;
+pub type ApiResult<T> = Result<Json<T>, ApiError>;

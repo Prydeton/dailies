@@ -9,6 +9,7 @@ import { useCalendarStore } from '/src/hooks'
 import { useAuthStore } from '/src/hooks/useAuth'
 
 import { ControlButton, ControlMonth, ControlsContainer, MonthContainer } from './Calendar.styles'
+import { Day } from '..'
 
 const Main = () => {
   const { isAuthLoading, session, signOut } = useAuthStore()
@@ -50,6 +51,7 @@ const Main = () => {
   }
 
   const [openedDate, setOpenedDate] = useState<string | undefined>(undefined)
+  console.log(openedDate)
   const openedDayTasks = useMemo(() => (openedDate && currentMonthTasks) ? currentMonthTasks[openedDate].sort((a, b) => a.order - b.order) : [], [currentMonthTasks, openedDate])
 
   return (<>
@@ -85,11 +87,12 @@ const Main = () => {
     <MonthContainer>
       {isCalendarLoading || !currentMonthTasks ?
         <Spinner center={true} /> : <>
-          {Object.entries(currentMonthTasks).map(([date, tasks]) => (<DayGlobe key={date} date={date} />))}
+          {Object.entries(currentMonthTasks).map(([date, tasks]) => (<DayGlobe key={date} date={date} setOpenedDate={() => setOpenedDate(date)} />))}
         </>
       }
     </MonthContainer>
-    <button onClick={() => handleSignout()} />
+
+    <Day openedDate={openedDate} tasks={openedDayTasks} closeFn={() => setOpenedDate(undefined)}></Day>
   </>)
 }
 

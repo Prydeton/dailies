@@ -1,11 +1,11 @@
 use std::{net::SocketAddr, sync::Arc};
 
 use axum::{
-  routing::{get}, Router, Json, Server, extract,
+  routing::{get, patch}, Router, Json, Server, extract,
 };
 use db::connect_to_database;
 use postgrest::Postgrest;
-use routes::get_calendar;
+use routes::{get_calendar::get_calendar, update_tasks::update_tasks};
 use tokio::sync::Mutex;
 
 mod routes;
@@ -29,7 +29,8 @@ async fn main() {
 
   let app = Router::new()
     .route("/ping", get(ping_handler))
-    .route("/calendar", get(get_calendar::get_calendar))
+    .route("/calendar", get(get_calendar))
+    .route("/tasks", patch(update_tasks))
     .with_state(shared_state);
 
   let addr = SocketAddr::from(([0, 0, 0, 0], 3000));

@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { Calendar, getCalendar, Task } from '/src/config/api'
+import { Calendar, getCalendarApi, Task, updateTaskApi } from '/src/config/api'
 
 import { useAuthStore } from '.'
 
@@ -8,8 +8,8 @@ interface CalendarStore {
   calendar: Calendar | null;
   loading: boolean;
   getCalendar: () => void;
+  updateTask: (task: Task) => void;
   updateTasks: (newTasks: Task[]) => void;
-  updateTaskComplete: (taskId: string, date: string, isComplete: boolean) => void;
 }
 
 const useCalendarStore = create<CalendarStore>(set => ({
@@ -25,7 +25,7 @@ const useCalendarStore = create<CalendarStore>(set => ({
       loading: true,
     }))
 
-    const calendar = await getCalendar(session.access_token)
+    const calendar = await getCalendarApi(session.access_token)
 
     set(_ => ({
       calendar,
@@ -33,7 +33,27 @@ const useCalendarStore = create<CalendarStore>(set => ({
     }))
   },
 
-  updateTasks: (newTasks: Task[]) => {
+  updateTask: async (task: Task) => {
+    const { session } = useAuthStore.getState()
+    if (!session) return console.warn('Session is not set')
+
+    set(state => {
+      if (state.calendar === null) return state
+      return {
+        calendar: {
+          ...(state.calendar || {}),
+          [task.date]: (state.calendar?.[task.date] || []).map(existingTask =>
+            task.id === existingTask.id ? task : existingTask
+          ),
+        },
+      }
+    })
+
+    const {user_id, ...updateTask} = task
+    await updateTaskApi(session.access_token, updateTask)
+  },
+
+  updateTasks: async (newTasks: Task[]) => {
     const { session } = useAuthStore.getState()
     if (!session) return console.warn('Session is not set')
 
@@ -43,23 +63,6 @@ const useCalendarStore = create<CalendarStore>(set => ({
         calendar: {
           ...state.calendar,
           [newTasks[0].date]: newTasks,
-        },
-      }
-    })
-  },
-
-  updateTaskComplete: (taskId: string, date: string, isComplete: boolean) => {
-    const { session } = useAuthStore.getState()
-    if (!session) return console.warn('Session is not set')
-
-    set(state => {
-      if (state.calendar === null) return state
-      return {
-        calendar: {
-          ...(state.calendar || {}),
-          [date]: (state.calendar?.[date] || []).map(task =>
-            task.id === taskId ? { ...task, is_complete: isComplete } : task
-          ),
         },
       }
     })

@@ -14,7 +14,6 @@ type DayProps = {
 }
 
 const Day: FC<DayProps> = ({ openedDate, tasks, closeFn }: DayProps) => {
-  console.log(handle)
   return createPortal(
     <>
       <PageContainer className={openedDate ? 'open' : 'close'}>

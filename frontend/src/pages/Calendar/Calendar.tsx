@@ -51,7 +51,6 @@ const Main = () => {
   }
 
   const [openedDate, setOpenedDate] = useState<string | undefined>(undefined)
-  console.log(openedDate)
   const openedDayTasks = useMemo(() => (openedDate && currentMonthTasks) ? currentMonthTasks[openedDate].sort((a, b) => a.order - b.order) : [], [currentMonthTasks, openedDate])
 
   return (<>

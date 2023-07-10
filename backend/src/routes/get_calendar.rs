@@ -11,13 +11,16 @@ use crate::{
   ApiState,
 };
 
-pub async fn get_calendar(state: State<Arc<Mutex<ApiState>>>, Extension(user_id): Extension<String>) -> ApiResult<Calendar> {
-  println!("{user_id}");
+pub async fn get_calendar(
+  state: State<Arc<Mutex<ApiState>>>, 
+  Extension(user_id): Extension<String>
+) -> ApiResult<Calendar> {
   let db = &state.lock().await.db;
 
   let res = db
       .from("task")
       .select("*")
+      .eq("user_id", user_id)
       .order("date")
       .execute()
       .await

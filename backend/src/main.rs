@@ -1,13 +1,13 @@
 use std::{net::SocketAddr, sync::Arc, env};
 use axum::{
-  routing::{get, patch}, Router, Json, Server, extract, http::{header::AUTHORIZATION, Method, HeaderValue, HeaderMap, Request}, middleware::{self, Next}, response::{Response},
+  routing::{get, patch}, Router, Json, Server, extract, http::{header::{AUTHORIZATION, CONTENT_TYPE}, Method, HeaderValue, HeaderMap, Request}, middleware::{self, Next}, response::{Response},
 };
 use chrono::Utc;
 use db::connect_to_database;
 use error::ApiError;
 use jsonwebtoken::{Validation, Algorithm, TokenData, decode, DecodingKey};
 use postgrest::Postgrest;
-use routes::{get_calendar::get_calendar, update_tasks::update_tasks};
+use routes::{get_calendar::get_calendar, update_task::update_task};
 use serde::{Serialize, Deserialize};
 use tokio::sync::Mutex;
 use tower_http::cors::CorsLayer;
@@ -32,14 +32,15 @@ async fn main() {
   }));
 
   let cors = CorsLayer::new()
-    .allow_headers([AUTHORIZATION])
+    .allow_headers([AUTHORIZATION, CONTENT_TYPE])
     .allow_methods([Method::GET, Method::PATCH])
     .allow_origin("http://localhost:5173".to_owned().parse::<HeaderValue>().unwrap());
     
   let app = Router::new()
     .route("/ping", get(ping_handler))
     .route("/calendar", get(get_calendar))
-    .route("/tasks", patch(update_tasks))
+    .route("/task", patch(update_task))
+    //.route("/tasks", patch(update_tasks))
     .route_layer(middleware::from_fn_with_state(
       shared_state.clone(),
       require_auth,
@@ -47,7 +48,6 @@ async fn main() {
     .with_state(shared_state)
     .layer(cors);
     
-
   let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
 
   Server::bind(&addr)

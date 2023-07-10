@@ -7,7 +7,7 @@ use db::connect_to_database;
 use error::ApiError;
 use jsonwebtoken::{Validation, Algorithm, TokenData, decode, DecodingKey};
 use postgrest::Postgrest;
-use routes::{get_calendar::get_calendar, update_task::update_task};
+use routes::{get_calendar::get_calendar, update_task::update_task, update_day::update_day};
 use serde::{Serialize, Deserialize};
 use tokio::sync::Mutex;
 use tower_http::cors::CorsLayer;
@@ -40,7 +40,7 @@ async fn main() {
     .route("/ping", get(ping_handler))
     .route("/calendar", get(get_calendar))
     .route("/task", patch(update_task))
-    //.route("/tasks", patch(update_tasks))
+    .route("/day", patch(update_day))
     .route_layer(middleware::from_fn_with_state(
       shared_state.clone(),
       require_auth,

@@ -22,7 +22,10 @@ pub struct Calendar(pub HashMap<String, Vec<Task>>);
 pub type ApiResult<T> = Result<Json<T>, ApiError>;
 
 #[derive(Deserialize)]
-pub struct UpdateTasksInput(pub Vec<TaskUpdate>);
+pub struct UpdateDayInput{
+  pub tasks: Vec<DayTaskUpdate>,
+  pub date: String,
+}
 
 #[derive(Deserialize)]
 pub struct UpdateTaskInput {
@@ -39,4 +42,11 @@ pub struct TaskUpdate {
   pub name: String,
   pub is_complete: bool,
   pub date: String,
+}
+
+#[derive(Deserialize)]
+pub struct DayTaskUpdate {
+  pub id: String,
+  pub name: String,
+  pub is_complete: bool,
 }

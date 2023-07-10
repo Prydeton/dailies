@@ -9,7 +9,7 @@ interface CalendarStore {
   loading: boolean;
   getCalendar: () => void;
   updateTask: (task: Task) => void;
-  updateTasks: (newTasks: Task[]) => void;
+  updateDay: (newTasks: Task[]) => void;
 }
 
 const useCalendarStore = create<CalendarStore>(set => ({
@@ -53,7 +53,7 @@ const useCalendarStore = create<CalendarStore>(set => ({
     await updateTaskApi(session.access_token, updateTask)
   },
 
-  updateTasks: async (newTasks: Task[]) => {
+  updateDay: async (tasks: Task[]) => {
     const { session } = useAuthStore.getState()
     if (!session) return console.warn('Session is not set')
 
@@ -62,7 +62,7 @@ const useCalendarStore = create<CalendarStore>(set => ({
       return {
         calendar: {
           ...state.calendar,
-          [newTasks[0].date]: newTasks,
+          [tasks[0].date]: tasks,
         },
       }
     })

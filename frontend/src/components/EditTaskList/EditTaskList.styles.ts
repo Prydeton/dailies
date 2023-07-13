@@ -68,17 +68,8 @@ export const TextInput = styled('input')`
   }
 `
 
-export const DeleteButton = styled('button')`
+export const ActionButton = styled('button')`
   background-color: transparent;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--white);
-`
-
-export const AddTaskButton = styled('button')`
-  background-color: var();
   border: none;
   display: flex;
   align-items: center;

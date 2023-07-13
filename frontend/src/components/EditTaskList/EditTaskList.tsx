@@ -7,9 +7,9 @@ import { CSS } from '@dnd-kit/utilities'
 import { GripVertical, Trash2 } from 'lucide-react'
 
 import { useCalendarStore } from '/src/hooks'
-import { Button } from '/src/pages/Day/Day.styles'
 
-import { ButtonContainer, Container, DeleteButton, DragHandleWrapper, List, Row, TextInput } from './EditTaskList.styles'
+import { ActionButton, ButtonContainer, Container, DragHandleWrapper, List, Row, TextInput } from './EditTaskList.styles'
+import { Button } from '..'
 
 interface Task {
   id: string,
@@ -57,9 +57,9 @@ export const InputItem = ({
       onChange={e => onChange?.(e.target.value)}
     />
 
-    <DeleteButton
+    <ActionButton
       onClick={onRemove}
-    ><Trash2 /></DeleteButton>
+    ><Trash2 /></ActionButton>
   </Row>
 }
 
@@ -160,7 +160,6 @@ const EditTaskList = ({ tasks, openedDate }: EditTaskListProps) => {
           <ButtonContainer>
             <Button
               onClick={() => {
-                // TODO SETUP MAXIMUM
                 const newTask: Task = {
                   id: crypto.randomUUID(),
                   name: '',
@@ -171,12 +170,13 @@ const EditTaskList = ({ tasks, openedDate }: EditTaskListProps) => {
                 }
                 onChange([...value, ...(value.length < 10) ? [newTask] : []])
               }}
-              disabled={value.length > 10}
+              disabled={value.length >= 10}
               type="button"
-              style={{color: 'var(--grey)'}}
+              secondary
             >Add</Button>
             <Button
               disabled={!isDirty}
+              primary
             >Save</Button>
           </ButtonContainer>
         </Container>

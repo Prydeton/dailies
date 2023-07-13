@@ -70,7 +70,7 @@ async fn require_auth<T>(
 ) -> Result<Response, ApiError>   {
   let auth_header = if let Some(token) = headers.get("authorization") {
     token.to_str().map_err(|_| {
-        ApiError::NotAuthorized
+      ApiError::NotAuthorized
     })?
   } else {
     Err(ApiError::NotAuthorized)?

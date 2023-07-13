@@ -18,16 +18,16 @@ pub async fn get_calendar(
   let db = &state.lock().await.db;
 
   let res = db
-      .from("task")
-      .select("*")
-      .eq("user_id", user_id)
-      .order("date")
-      .execute()
-      .await
-      .map_err(|error| ApiError::PostgrestrsError(error.to_string()))?;
+    .from("task")
+    .select("*")
+    .eq("user_id", user_id)
+    .order("date")
+    .execute()
+    .await
+    .map_err(|error| ApiError::PostgrestrsError(error.to_string()))?;
 
   let tasks: Vec<Task> = from_str(&res.text().await.unwrap())
-      .map_err(|error| ApiError::PostgrestrsError(error.to_string()))?;
+    .map_err(|error| ApiError::PostgrestrsError(error.to_string()))?;
 
   let mut calendar = HashMap::new();
   let current_date = Local::now().naive_local().date();

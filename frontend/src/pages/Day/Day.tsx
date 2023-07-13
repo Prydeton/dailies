@@ -20,9 +20,9 @@ const Day: FC<DayProps> = ({ openedDate, tasks, closeFn }: DayProps) => {
     <>
       <PageContainer className={openedDate ? 'open' : 'close'}>
         <Wrapper>
-          <Handle onClick={() => closeFn(undefined)}><img src={handle} width={40} height={24}/></Handle>
+          <Handle onClick={() => {setIsEditing(false), closeFn(undefined)}}><img src={handle} width={40} height={24}/></Handle>
           <h2>Tasks</h2>
-          {isEditing ? <EditTaskList tasks={tasks} openedDate={openedDate} /> :
+          {isEditing ? <EditTaskList tasks={tasks} openedDate={openedDate} setIsEditing={setIsEditing} /> :
             <div>
               {tasks?.map(task => <CheckListItem key={task.id} task={task} />)}
               <button onClick={() => setIsEditing(true)}>Edit</button>
@@ -30,7 +30,7 @@ const Day: FC<DayProps> = ({ openedDate, tasks, closeFn }: DayProps) => {
           }
         </Wrapper>
       </PageContainer>
-      <Cover className={openedDate ? 'open' : 'close'} onClick={() => closeFn(undefined)}></Cover>
+      <Cover className={openedDate ? 'open' : 'close'} onClick={() => {setIsEditing(false), closeFn(undefined)}}></Cover>
     </>,
     document.body)
 }

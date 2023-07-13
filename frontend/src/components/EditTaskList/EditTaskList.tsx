@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from 'react'
+import { Dispatch, Fragment, SetStateAction, useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { closestCenter, DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
@@ -71,9 +71,10 @@ const Sortable = (props: InputItemProps) => {
 interface EditTaskListProps {
   openedDate?: string
   tasks: Task[]
+  setIsEditing: Dispatch<SetStateAction<boolean>>
 }
 
-const EditTaskList = ({ tasks, openedDate }: EditTaskListProps) => {
+const EditTaskList = ({ tasks, openedDate, setIsEditing }: EditTaskListProps) => {
   const { updateDay } = useCalendarStore()
 
   interface DefaultValues {
@@ -106,6 +107,7 @@ const EditTaskList = ({ tasks, openedDate }: EditTaskListProps) => {
     updateDay(openedDate, cleanedTasks)
 
     reset({ tasks: cleanedTasks })
+    setIsEditing(false)
   }
 
   const [active, setActive] = useState<InputItemProps | undefined>()

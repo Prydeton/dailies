@@ -8,7 +8,7 @@ import { Calendar } from '/src/config/api'
 import { useCalendarStore } from '/src/hooks'
 import { useAuthStore } from '/src/hooks/useAuth'
 
-import { ControlButton, ControlMonth, ControlsContainer, MonthContainer } from './Calendar.styles'
+import { ControlButton, ControlMonth, ControlsContainer, MonthContainer, PageContainer } from './Calendar.styles'
 import { Day } from '..'
 
 const Main = () => {
@@ -51,9 +51,10 @@ const Main = () => {
   }
 
   const [openedDate, setOpenedDate] = useState<string | undefined>(undefined)
+
   const openedDayTasks = useMemo(() => (openedDate && currentMonthTasks) ? currentMonthTasks[openedDate].sort((a, b) => a.order - b.order) : [], [currentMonthTasks, openedDate])
 
-  return (<>
+  return (<PageContainer>
     <Header />
     <ControlsContainer>
       <ControlButton
@@ -91,8 +92,9 @@ const Main = () => {
       }
     </MonthContainer>
 
-    <Day openedDate={openedDate} tasks={openedDayTasks} closeFn={() => setOpenedDate(undefined)}></Day>
-  </>)
+    <Day openedDate={openedDate} tasks={openedDayTasks} closeFn={() => setOpenedDate(undefined)} />
+  </PageContainer>)
 }
+
 
 export default Main

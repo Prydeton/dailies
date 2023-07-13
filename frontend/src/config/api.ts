@@ -37,19 +37,22 @@ export const Task = z.object({
   date: z.string(),
   order: z.number(),
 })
-
 export type Task = z.infer<typeof Task>
 
-type UpdateTaskInput = Omit<typeof Task['_type'], 'user_id'>;
-const UpdateTaskResponse = Task
+const UpdateTaskInput = Task.omit({ user_id: true })
+type UpdateTaskInput = z.infer<typeof UpdateTaskInput>
+const UpdateTaskResponse = z.object({
+  task: Task
+})
 
+const UpdateDayTask = Task.omit({ user_id: true, date: true, order: true })
+type UpdateDayTask = z.infer<typeof UpdateDayTask>
 type UpdateDayInput = {
-  tasks: Omit<UpdateTaskInput, 'date'>
+  tasks: UpdateDayTask[]
   date: string,
 }
 const UpdateDayResponse = z.object({
-  tasks: z.array(Task),
-  date: z.string(),
+  tasks: z.array(Task)
 })
 
 export const Calendar = z.record(z.string(), z.array(Task))

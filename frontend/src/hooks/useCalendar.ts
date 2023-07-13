@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { Calendar, getCalendarApi, Task, updateTaskApi } from '/src/config/api'
+import { Calendar, getCalendarApi, Task, updateDayApi, updateTaskApi } from '/src/config/api'
 
 import { useAuthStore } from '.'
 
@@ -9,7 +9,7 @@ interface CalendarStore {
   loading: boolean;
   getCalendar: () => void;
   updateTask: (task: Task) => void;
-  updateDay: (newTasks: Task[]) => void;
+  updateDay: (date: string, newTasks: Task[]) => void;
 }
 
 const useCalendarStore = create<CalendarStore>(set => ({
@@ -33,7 +33,7 @@ const useCalendarStore = create<CalendarStore>(set => ({
     }))
   },
 
-  updateTask: async (task: Task) => {
+  updateTask: (task: Task) => {
     const { session } = useAuthStore.getState()
     if (!session) return console.warn('Session is not set')
 
@@ -49,11 +49,11 @@ const useCalendarStore = create<CalendarStore>(set => ({
       }
     })
 
-    const {user_id, ...updateTask} = task
-    await updateTaskApi(session.access_token, updateTask)
+    const { user_id, ...updateTask } = task
+    updateTaskApi(session.access_token, updateTask)
   },
 
-  updateDay: async (tasks: Task[]) => {
+  updateDay: (date: string, tasks: Task[]) => {
     const { session } = useAuthStore.getState()
     if (!session) return console.warn('Session is not set')
 
@@ -66,6 +66,16 @@ const useCalendarStore = create<CalendarStore>(set => ({
         },
       }
     })
+
+    const updateDay = {
+      date,
+      tasks: tasks.map(task => {
+        const { user_id, date, order, ...cleanedTask } = task
+        return cleanedTask
+      })
+    }
+
+    updateDayApi(session.access_token, updateDay)
   },
 }))
 

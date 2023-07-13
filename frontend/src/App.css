@@ -32,10 +32,11 @@ body {
   font-family: 'Inter', sans-serif;
   background: var(--background);
   color: var(--white);
+  max-height: 100vh;
+  overflow: hidden;
 }
 
 #root {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }

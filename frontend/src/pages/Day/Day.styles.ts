@@ -48,7 +48,7 @@ export const PageContainer = styled('div')`
 export const Wrapper = styled('div')`
   height: 100%;
   width: 100%;
-  max-height: 800;
+  max-height: 800px;
   max-width: 400px;
   display: flex;
   flex-direction: column;
@@ -66,4 +66,11 @@ export const Handle = styled('div')`
   align-items: center;
   justify-content: center;
   height: 10%;
+`
+
+export const Button = styled('button')`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
 `

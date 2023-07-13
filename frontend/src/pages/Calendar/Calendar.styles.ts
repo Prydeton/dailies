@@ -3,6 +3,7 @@ import { styled } from 'goober'
 export const PageContainer = styled('main')`
     display: flex;
     flex-direction: column;
+    position: relative;
 `
 
 export const ControlsContainer = styled('div')`
@@ -46,4 +47,5 @@ export const MonthContainer = styled('div')`
   justify-content: space-between;
   gap: 1em;
   padding: 20px;
+  overflow-y: scroll;
 `

@@ -33,6 +33,7 @@ export const PageContainer = styled('div')`
   box-shadow: 0 2px 40px 0 rgba(0, 0, 0, 0.75);
   display: flex;
   justify-content: center;
+  overflow-y: scroll;
 
   &.open {
     transform: translateY(0%);
@@ -42,6 +43,7 @@ export const PageContainer = styled('div')`
   &.close {
     transform: translateY(100%);
     transition: transform .5s;
+    box-shadow: none;
   }
 `
 
@@ -71,4 +73,9 @@ export const Handle = styled('div')`
 export const HeaderContainer = styled('div')`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    margin: 0;
+  }
 `

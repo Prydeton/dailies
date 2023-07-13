@@ -1,11 +1,25 @@
 import { FC } from 'react'
+import { LogOut } from 'lucide-react'
 
-import { Container } from './Header.styles'
+import { useAuthStore } from '/src/hooks'
+
+import { Container, Spacer, Title, TitleWrapper } from './Header.styles'
+import { Button } from '..'
 
 const Header: FC = () => {
-  return <Container>
-    <h1>Dailies</h1>
-  </Container>
+  const { signOut } = useAuthStore()
+
+  return (
+    <Container>
+      <Button transparent={true} onClick={() => signOut()} fullWidth={false}>
+        <LogOut />
+      </Button>
+      <TitleWrapper>
+        <Title>Dailies</Title>
+      </TitleWrapper>
+      <Spacer />
+    </Container>
+  )
 }
 
 export default Header

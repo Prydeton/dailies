@@ -54,5 +54,6 @@ export const MonthContainer = styled('div')`
   justify-content: space-between;
   gap: 1em;
   padding: 20px;
+  max-height: calc(100vh - 95px - 82px);
   overflow-y: scroll;
 `

@@ -12,9 +12,9 @@ import { ControlButton, ControlMonth, ControlsContainer, ControlsWrapper, MonthC
 import { Day } from '..'
 
 const Main = () => {
-  const { isAuthLoading, session, signOut } = useAuthStore()
+  const { isAuthLoading, session } = useAuthStore()
   const { calendar, loading: isCalendarLoading, getCalendar } = useCalendarStore()
-  const [_, setLocation] = useLocation()
+  const [, setLocation] = useLocation()
 
   useEffect(() => {
     if (!isAuthLoading) {
@@ -45,10 +45,6 @@ const Main = () => {
       .sort((a, b) => dayjs(a).isBefore(dayjs(b)) ? -1 : 1)
       .reduce((obj, key) => ({...obj, [key]: calendar[key]}), {})
   , [calendar, currentMonth])
-
-  const handleSignout = () => {
-    signOut()
-  }
 
   const [openedDate, setOpenedDate] = useState<string | undefined>(undefined)
 
@@ -89,7 +85,7 @@ const Main = () => {
     <MonthContainer>
       {isCalendarLoading || !currentMonthTasks ?
         <Spinner center={true} /> : <>
-          {Object.entries(currentMonthTasks).map(([date, tasks]) => (<DayGlobe key={date} date={date} setOpenedDate={() => setOpenedDate(date)} />))}
+          {Object.entries(currentMonthTasks).map(([date, tasks]) => (<DayGlobe key={date} date={date} setOpenedDate={() => setOpenedDate(date)} tasks={tasks} />))}
         </>
       }
     </MonthContainer>
@@ -97,6 +93,5 @@ const Main = () => {
     <Day openedDate={openedDate} tasks={openedDayTasks} closeFn={() => setOpenedDate(undefined)} />
   </PageContainer>)
 }
-
 
 export default Main

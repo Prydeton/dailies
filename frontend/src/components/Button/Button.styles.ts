@@ -11,6 +11,7 @@ export const StyledButton = styled('button')`
   font: inherit;
   color: var(--background-dark);
   background-color: var(--white);
+  cursor: pointer;
 
   &.primary {
     background-color: var(--neon-green);

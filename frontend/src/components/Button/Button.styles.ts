@@ -1,7 +1,6 @@
 import { styled } from 'goober'
 
 export const StyledButton = styled('button')`
-  width: 100%;
   padding: .6em 1em;
   border-style: none;
   border-radius: 5px;
@@ -26,6 +25,15 @@ export const StyledButton = styled('button')`
   &.disabled{
     opacity: .5;
     cursor: default;
+  }
+
+  &.fullWidth {
+    width: 100%;
+  }
+
+  &.transparent {
+    color: var(--white);
+    background-color: transparent;
   }
 `
 

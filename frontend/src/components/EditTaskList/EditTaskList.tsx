@@ -8,7 +8,7 @@ import { GripVertical, Trash2 } from 'lucide-react'
 
 import { useCalendarStore } from '/src/hooks'
 
-import { ActionButton, ButtonContainer, Container, DragHandleWrapper, List, Row, TextInput } from './EditTaskList.styles'
+import { ButtonContainer, Container, DragHandleWrapper, List, Row, TextInput } from './EditTaskList.styles'
 import { Button } from '..'
 
 interface Task {
@@ -57,9 +57,10 @@ export const InputItem = ({
       onChange={e => onChange?.(e.target.value)}
     />
 
-    <ActionButton
+    <Button
+      transparent
       onClick={onRemove}
-    ><Trash2 /></ActionButton>
+    ><Trash2 /></Button>
   </Row>
 }
 

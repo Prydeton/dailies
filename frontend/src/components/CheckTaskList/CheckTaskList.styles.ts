@@ -1,6 +1,6 @@
 import { styled } from 'goober'
 
-export const Container = styled('div')`
+export const CheckItemContainer = styled('div')`
   display: flex;
   align-items: center;
   justify-content: space-between;

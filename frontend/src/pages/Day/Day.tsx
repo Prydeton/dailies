@@ -1,11 +1,12 @@
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { Edit } from 'lucide-react'
 
-import { CheckListItem, EditTaskList } from '/src/components'
+import { Button, CheckTaskList, EditTaskList } from '/src/components'
 import { Task } from '/src/config/api'
 import handle from '/src/res/handle.svg'
 
-import { Cover, Handle, PageContainer, Wrapper } from './Day.styles'
+import { Cover, Handle, HeaderContainer, PageContainer, Wrapper } from './Day.styles'
 
 type DayProps = {
   closeFn: Dispatch<SetStateAction<undefined>>
@@ -21,12 +22,13 @@ const Day: FC<DayProps> = ({ openedDate, tasks, closeFn }: DayProps) => {
       <PageContainer className={openedDate ? 'open' : 'close'}>
         <Wrapper>
           <Handle onClick={() => {setIsEditing(false), closeFn(undefined)}}><img src={handle} width={40} height={24}/></Handle>
-          <h2>Tasks</h2>
-          {isEditing ? <EditTaskList tasks={tasks} openedDate={openedDate} setIsEditing={setIsEditing} /> :
-            <div>
-              {tasks?.map(task => <CheckListItem key={task.id} task={task} />)}
-              <button onClick={() => setIsEditing(true)}>Edit</button>
-            </div>
+          <HeaderContainer>
+            <h2>Tasks</h2>
+            {!isEditing && <Button transparent onClick={() => setIsEditing(true)} fullWidth={false}><Edit /></Button>}
+          </HeaderContainer>
+          {isEditing
+            ? <EditTaskList tasks={tasks} openedDate={openedDate} setIsEditing={setIsEditing} />
+            : <CheckTaskList tasks={tasks} />
           }
         </Wrapper>
       </PageContainer>

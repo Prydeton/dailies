@@ -8,8 +8,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   src?: string
   primary?: boolean
   secondary?: boolean
-  text?: string
-  center?: boolean
+  fullWidth?: boolean
+  transparent?: boolean
 }
 
 const Button: FC<ButtonProps> = ({
@@ -18,6 +18,8 @@ const Button: FC<ButtonProps> = ({
   src,
   primary,
   secondary,
+  fullWidth = true,
+  transparent,
   children,
   ...props
 }: ButtonProps) => <StyledButton
@@ -25,7 +27,9 @@ const Button: FC<ButtonProps> = ({
     [
       primary && 'primary',
       secondary && 'secondary',
-      disabled && 'disabled'
+      disabled && 'disabled',
+      fullWidth && 'fullWidth',
+      transparent && 'transparent',
     ].filter(Boolean).join(' ')
   }
   {...props}

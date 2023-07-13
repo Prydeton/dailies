@@ -68,15 +68,6 @@ export const TextInput = styled('input')`
   }
 `
 
-export const ActionButton = styled('button')`
-  background-color: transparent;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--white);
-`
-
 export const ButtonContainer = styled('div')`
   display: flex;
   gap: 20px;

@@ -6,6 +6,12 @@ export const PageContainer = styled('main')`
     position: relative;
 `
 
+export const ControlsWrapper = styled('div')`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`
+
 export const ControlsContainer = styled('div')`
   width: 100%;
   box-sizing: border-box;
@@ -13,6 +19,7 @@ export const ControlsContainer = styled('div')`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  max-width: 400px;
 `
 
 export const ControlButton = styled('button')`

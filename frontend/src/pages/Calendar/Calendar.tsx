@@ -8,7 +8,7 @@ import { Calendar } from '/src/config/api'
 import { useCalendarStore } from '/src/hooks'
 import { useAuthStore } from '/src/hooks/useAuth'
 
-import { ControlButton, ControlMonth, ControlsContainer, MonthContainer, PageContainer } from './Calendar.styles'
+import { ControlButton, ControlMonth, ControlsContainer, ControlsWrapper, MonthContainer, PageContainer } from './Calendar.styles'
 import { Day } from '..'
 
 const Main = () => {
@@ -56,33 +56,35 @@ const Main = () => {
 
   return (<PageContainer>
     <Header />
-    <ControlsContainer>
-      <ControlButton
-        disabled={firstMonth?.isSame(currentMonth)}
-        onClick={(() => setCurrentMonth(firstMonth || currentMonth))}>
-        <ChevronFirst />
-      </ControlButton>
+    <ControlsWrapper>
+      <ControlsContainer>
+        <ControlButton
+          disabled={firstMonth?.isSame(currentMonth)}
+          onClick={(() => setCurrentMonth(firstMonth || currentMonth))}>
+          <ChevronFirst />
+        </ControlButton>
 
-      <ControlButton
-        disabled={firstMonth?.isSame(currentMonth)}
-        onClick={() => setCurrentMonth(currentMonth.subtract(1, 'month'))}>
-        <ChevronLeft />
-      </ControlButton>
+        <ControlButton
+          disabled={firstMonth?.isSame(currentMonth)}
+          onClick={() => setCurrentMonth(currentMonth.subtract(1, 'month'))}>
+          <ChevronLeft />
+        </ControlButton>
 
-      <ControlMonth>{currentMonth.format('MMMM')}</ControlMonth>
+        <ControlMonth>{currentMonth.format('MMMM')}</ControlMonth>
 
-      <ControlButton
-        disabled={lastMonth?.isSame(currentMonth)}
-        onClick={() => setCurrentMonth(currentMonth.add(1, 'month'))}>
-        <ChevronRight />
-      </ControlButton>
+        <ControlButton
+          disabled={lastMonth?.isSame(currentMonth)}
+          onClick={() => setCurrentMonth(currentMonth.add(1, 'month'))}>
+          <ChevronRight />
+        </ControlButton>
 
-      <ControlButton
-        disabled={lastMonth?.isSame(currentMonth)}
-        onClick={(() => setCurrentMonth(lastMonth || currentMonth))}>
-        <ChevronLast />
-      </ControlButton>
-    </ControlsContainer>
+        <ControlButton
+          disabled={lastMonth?.isSame(currentMonth)}
+          onClick={(() => setCurrentMonth(lastMonth || currentMonth))}>
+          <ChevronLast />
+        </ControlButton>
+      </ControlsContainer>
+    </ControlsWrapper>
 
     <MonthContainer>
       {isCalendarLoading || !currentMonthTasks ?

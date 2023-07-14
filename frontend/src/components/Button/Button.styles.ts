@@ -13,6 +13,10 @@ export const StyledButton = styled('button')`
   background-color: var(--white);
   cursor: pointer;
 
+  &:hover:not(.disabled), &:focus-visible {
+    opacity: .85;
+  }
+
   &.primary {
     background-color: var(--neon-green);
     color: var(--background-dark);

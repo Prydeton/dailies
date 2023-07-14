@@ -1,0 +1,29 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - backend/**
+      - .github/workflows/deploy_backend.yml
+
+jobs:
+  build-and-push:
+    name: Deploy to Fly.io
+    runs-on: ubuntu-latest
+    if: github.repository == 'Prydeton/dailies'
+
+    defaults:
+      run:
+        working-directory: backend
+
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

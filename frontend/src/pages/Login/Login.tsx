@@ -10,6 +10,7 @@ const Login = () => {
   const [loginError, setLoginError] = useState<string>()
 
   const handleSignInWithProvider = async (provider: 'google' | 'github') => {
+    console.log({'test': env.FRONTEND_URL})
     const { error } = await supabase.auth.signInWithOAuth({
       provider: provider,
       options: {

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import { SocialLoginButton } from '/src/components'
-import { env } from '/src/config'
 import { useAuthStore } from '/src/hooks'
 
 import { Error, FormWrapper, PageContainer, Title } from './Login.styles'

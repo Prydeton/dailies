@@ -23,7 +23,7 @@ const CheckTaskList: FC<CheckTaskListProps> = ({ tasks, openedDate }: CheckTaskL
           onClick={() => {
             if (!openedDate) return
             console.log({task})
-            updateDay(openedDate, tasks.map(t => task.id === t.id ? { ...task, is_complete: !task.is_complete } : task))}
+            updateDay(openedDate, tasks.map(t => task.id === t.id ? { ...task, is_complete: !task.is_complete } : t))}
           }>
           {task.is_complete && <Check />}
         </CheckButton>

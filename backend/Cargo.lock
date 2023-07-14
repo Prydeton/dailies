@@ -206,7 +206,6 @@ dependencies = [
  "postgrest",
  "serde",
  "serde_json",
- "supabase",
  "tokio",
  "tower",
  "tower-http",
@@ -985,12 +984,6 @@ name = "spin"
 version = "0.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6e63cff320ae2c57904679ba7cb63280a3dc4613885beafb148ee7bf9aa9042d"
-
-[[package]]
-name = "supabase"
-version = "0.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "706a6fa1fd170fe197eab440c69f5b31dcd46d205a4e147795b533ef4b95ada0"
 
 [[package]]
 name = "syn"

@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useMemo } from 'react'
 
 import { Task } from '/src/config/api'
 
-import { Container } from './DayGlobe.styles'
+import { Container, GlobeWrapper, Month } from './DayGlobe.styles'
 
 interface DayGlobeProps {
   date: string
@@ -18,8 +18,11 @@ const DayGlobe: React.FC<DayGlobeProps> = ({ tasks, date, setOpenedDate }: DayGl
   }, [tasks])
 
   return (
-    <Container fillPercentage={fillPercentage} onClick={() => setOpenedDate(date)} disabled={tasks.length === 0}>
-      {date}
+    <Container>
+      <GlobeWrapper fillPercentage={fillPercentage} onClick={() => setOpenedDate(date)} disabled={tasks.length === 0}>
+
+      </GlobeWrapper>
+      <Month>{new Date(date).getDate()}</Month>
     </Container>
   )
 }

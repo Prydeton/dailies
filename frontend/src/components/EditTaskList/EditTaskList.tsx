@@ -104,7 +104,8 @@ const EditTaskList = ({ tasks, openedDate, setIsEditing }: EditTaskListProps) =>
       .filter(task => task.name !== '')
       .map((task, index) => ({ ...task, order: index }))
       .sort((a, b) => a.order - b.order)
-    console.log({tasks})
+
+    if (cleanedTasks.length === 0) return
     updateDay(openedDate, cleanedTasks)
 
     reset({ tasks: cleanedTasks })
@@ -150,7 +151,7 @@ const EditTaskList = ({ tasks, openedDate, setIsEditing }: EditTaskListProps) =>
                     <Sortable
                       task={item}
                       onChange={v => onChange(value.map(q => q.id === item.id ? { ...q, name: v } : q))}
-                      onRemove={() => onChange(value.filter(q => q.id !== item.id))}
+                      onRemove={() => onChange(value.length > 1 ? value.filter(q => q.id !== item.id) : value)}
                       style={active?.task.id === item.id ? { opacity: 0 } : undefined}
                     />
                   </Fragment>), [value, active?.task.id])}

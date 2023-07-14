@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { SocialLoginButton } from '/src/components'
+import { Button } from '/src/components'
 import { useAuthStore } from '/src/hooks'
 
 import { Error, FormWrapper, PageContainer, Title } from './Login.styles'
@@ -17,16 +17,14 @@ const Login = () => {
   return (<PageContainer>
     <FormWrapper>
       <Title>Dailies</Title>
-      <SocialLoginButton
-        text="Continue with Google"
+      <Button
         src="/google-icon.png"
         onClick={() => handleSignInWithProvider('google')}
-      />
-      <SocialLoginButton
-        text="Continue with GitHub"
+      >Continue with Google</Button>
+      <Button
         src="/github-icon.png"
         onClick={() => handleSignInWithProvider('github')}
-      />
+      >Continue with GitHub</Button>
       {loginError && <Error>{loginError}</Error>}
     </FormWrapper>
   </PageContainer>)

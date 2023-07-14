@@ -27,6 +27,9 @@ pub type State = extract::State<Arc<Mutex<ApiState>>>;
 async fn main() {
   dotenvy::dotenv().ok();
 
+  env::var("JWT_SECRET")
+    .expect("Expected JWT_SECRET in env variables");
+
   let shared_state = Arc::new(Mutex::new(ApiState{
     db: connect_to_database().await,
   }));
@@ -34,7 +37,16 @@ async fn main() {
   let cors = CorsLayer::new()
     .allow_headers([AUTHORIZATION, CONTENT_TYPE])
     .allow_methods([Method::GET, Method::PATCH])
-    .allow_origin("http://localhost:5173".to_owned().parse::<HeaderValue>().unwrap());
+    .allow_origin(
+      if cfg!(debug_assertions) {
+          "http://localhost:5173".to_owned()
+      } else {
+          env::var("FRONTEND_URL").expect("Missing FRONTEND_URL environment variable")
+      }
+      .parse::<HeaderValue>()
+      .unwrap(),
+    );
+
     
   let app = Router::new()
     .route("/ping", get(ping_handler))

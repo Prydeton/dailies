@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { SocialLoginButton } from '/src/components'
+import { env } from '/src/config'
 import { supabase } from '/src/libs'
 
 import { Error, FormWrapper, PageContainer, Title } from './Login.styles'
@@ -12,7 +13,7 @@ const Login = () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: provider,
       options: {
-        redirectTo: 'http://localhost:5173'
+        redirectTo: env.FRONTEND_URL
       }
     })
     setLoginError(error?.message)

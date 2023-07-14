@@ -3,7 +3,7 @@ import { LogOut } from 'lucide-react'
 
 import { useAuthStore } from '/src/hooks'
 
-import { Container, Spacer, Title, TitleWrapper } from './Header.styles'
+import { Container } from './Header.styles'
 import { Button } from '..'
 
 const Header: FC = () => {
@@ -11,13 +11,10 @@ const Header: FC = () => {
 
   return (
     <Container>
-      <Button transparent={true} onClick={() => signOut()} fullWidth={false}>
+      <Button style={{position: 'absolute', left: '20px' }} transparent={true} onClick={() => signOut()} fullWidth={false}>
         <LogOut />
       </Button>
-      <TitleWrapper>
-        <Title>Dailies</Title>
-      </TitleWrapper>
-      <Spacer />
+      <h2>Dailies</h2>
     </Container>
   )
 }

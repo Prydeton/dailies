@@ -10,7 +10,7 @@ This is a guide on getting Dailies working locally for development purposes. You
 
 ### Software
 
-Dailies is written using Rust (for the API) and React (for the frontend). Before you begin, you'll need to make sure you have the required software installed:
+Dailies is written using Rust (for the backend) and React (for the frontend). Before you begin, you'll need to make sure you have the required software installed:
 
 | Software | Installation instructions |
 | --- | --- |
@@ -22,10 +22,10 @@ Dailies is written using Rust (for the API) and React (for the frontend). Before
 ### Setup
 
 1. Clone the repository.
-2. Run `cargo run` in the `api` folder to build and start the API.
+2. Run `cargo run` in the `backend` folder to build and start the backend.
 3. Run `yarn` in `frontend` folder to install dependencies, then `yarn dev` to start the dev server.
 
-By default, the API will start at http://localhost:3000, and the frontend will be available at http://localhost:5713.
+By default, the backend will start at http://localhost:3000, and the frontend will be available at http://localhost:5713.
 
 ## Pull Requests
 

@@ -1,22 +1,16 @@
 import { useState } from 'react'
 
 import { SocialLoginButton } from '/src/components'
-import { env } from '/src/config'
-import { supabase } from '/src/libs'
+import { useAuthStore } from '/src/hooks'
 
 import { Error, FormWrapper, PageContainer, Title } from './Login.styles'
 
 const Login = () => {
   const [loginError, setLoginError] = useState<string>()
+  const { signInWithOAuth } = useAuthStore()
 
   const handleSignInWithProvider = async (provider: 'google' | 'github') => {
-    console.log({'test': env.FRONTEND_URL})
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: provider,
-      options: {
-        redirectTo: env.FRONTEND_URL
-      }
-    })
+    const { error } = await signInWithOAuth(provider)
     setLoginError(error?.message)
   }
 

@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { AuthError, OAuthResponse, Session } from '@supabase/supabase-js'
 import { create } from 'zustand'
 
+import { env } from '/src/config'
 import { supabase } from '/src/libs'
 
 export type supportedOAuthProviers = 'google' | 'github'
@@ -20,10 +21,10 @@ export const useAuthStore = create<AuthStore>()(set => ({
   setSession: session => set({ session }),
   isAuthLoading: true,
   setIsAuthLoading: isAuthLoading => set({ isAuthLoading }),
-  signInWithOAuth: provider => supabase.auth.signInWithOAuth({
+  signInWithOAuth: async provider => supabase.auth.signInWithOAuth({
     provider: provider,
     options: {
-      redirectTo: 'http://localhost:5173'
+      redirectTo: env.FRONTEND_URL
     }
   }),
   signOut: () => supabase.auth.signOut()

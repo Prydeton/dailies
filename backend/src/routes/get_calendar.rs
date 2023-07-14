@@ -1,7 +1,7 @@
 use std::{sync::Arc, collections::HashMap};
 use serde_json::from_str;
 use tokio::sync::Mutex;
-use chrono::prelude::*;
+use chrono::{prelude::*, Duration};
 use axum::{extract::State, Json, Extension};
 use uuid::Uuid;
 
@@ -32,27 +32,43 @@ pub async fn get_calendar(
   let mut calendar = HashMap::new();
   let current_date = Local::now().naive_local().date();
 
+  let first_task_date;
   if tasks.is_empty() {
+    println!("h");
     let first_task = Task {
       id: Uuid::new_v4().to_string(),
       user_id: Uuid::new_v4().to_string(),
-      name: "".to_string(),
+      name: "Welcome!".to_string(),
       is_complete: false,
       date: current_date.to_string(),
       order: 1,
     };
     calendar.insert(current_date.to_string(), vec![first_task]);
+    first_task_date = current_date;
   } else {
-    let first_task_date: NaiveDate = NaiveDate::parse_from_str(&tasks.first().unwrap().date, "%Y-%m-%d").unwrap();
-    let first_display_day = first_task_date.with_day(1).unwrap();
-    let mut date = first_display_day;
+    first_task_date = NaiveDate::parse_from_str(&tasks.first().unwrap().date, "%Y-%m-%d").unwrap();
+  }
 
-    while date < first_task_date {
-      let date_string = date.format("%Y-%m-%d").to_string();
-      calendar.insert(date_string.clone(), Vec::new());
-      date += chrono::Duration::days(1)
-    }
+  let first_display_day = first_task_date.with_day(1).unwrap();
+  let mut date = first_display_day;
+  while date < first_task_date {
+    let date_string = date.format("%Y-%m-%d").to_string();
+    calendar.insert(date_string.clone(), Vec::new());
+    date += chrono::Duration::days(1)
+  }
 
+  let last_display_day = current_date
+    .with_day(1).unwrap()
+    .with_month(current_date.month() + 1).unwrap()
+    .pred_opt().unwrap();
+  date = current_date + Duration::days(1);
+  while date <= last_display_day {
+    let date_string = date.format("%Y-%m-%d").to_string();
+    calendar.insert(date_string.clone(), Vec::new());
+    date += chrono::Duration::days(1)
+  }
+
+  if !tasks.is_empty() {
     date = first_task_date;
     let mut prev_tasks_for_date: Vec<Task> = Vec::new();
     while date <= current_date {
@@ -78,19 +94,8 @@ pub async fn get_calendar(
         prev_tasks_for_date = tasks_for_date
       }
       
-      date += chrono::Duration::days(1);
+      date += Duration::days(1);
     }
-
-    let last_display_day = current_date
-      .with_day(1).unwrap()
-      .with_month(current_date.month() + 1).unwrap()
-      .pred_opt().unwrap();
-    date = current_date;
-    while date <= last_display_day {
-      let date_string = date.format("%Y-%m-%d").to_string();
-      calendar.insert(date_string.clone(), Vec::new());
-      date += chrono::Duration::days(1)
-    }
-  };
+  }
   Ok(Json(Calendar(calendar)))
 }

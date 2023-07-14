@@ -12,22 +12,8 @@ pub async fn update_day(
 ) -> ApiResult<UpdateDayResponse> {
   let db = &state.lock().await.db;
 
-  let new_tasks: Vec<Value> = tasks
-    .iter()
-    .enumerate()
-    .map(|(i, task)| {
-      json!({
-        "id": task.id.clone(),
-        "name": task.name.clone(),
-        "date": date.clone(),
-        "order": i as i32,
-        "is_complete": false,
-      })
-    })
-    .collect();
-
   let payload = json!({
-    "tasks": new_tasks,
+    "tasks": tasks,
     "param_date": date,
     "param_user_id": user_id,
   }).to_string();

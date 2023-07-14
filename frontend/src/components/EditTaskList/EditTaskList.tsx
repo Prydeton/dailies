@@ -104,7 +104,7 @@ const EditTaskList = ({ tasks, openedDate, setIsEditing }: EditTaskListProps) =>
       .filter(task => task.name !== '')
       .map((task, index) => ({ ...task, order: index }))
       .sort((a, b) => a.order - b.order)
-
+    console.log({tasks})
     updateDay(openedDate, cleanedTasks)
 
     reset({ tasks: cleanedTasks })

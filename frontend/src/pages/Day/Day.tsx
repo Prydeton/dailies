@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Edit } from 'lucide-react'
 
@@ -16,6 +16,7 @@ type DayProps = {
 
 const Day: FC<DayProps> = ({ openedDate, tasks, closeFn }: DayProps) => {
   const [isEditing, setIsEditing] = useState(false)
+  const canEdit = useMemo(() => openedDate === new Date().toISOString().substring(0, 10), [openedDate])
 
   return createPortal(
     <>
@@ -24,11 +25,11 @@ const Day: FC<DayProps> = ({ openedDate, tasks, closeFn }: DayProps) => {
           <Handle onClick={() => {setIsEditing(false), closeFn(undefined)}}><img src={handle} width={40} height={24}/></Handle>
           <HeaderContainer>
             <h2>Tasks</h2>
-            {!isEditing && <Button transparent onClick={() => setIsEditing(true)} fullWidth={false}><Edit /></Button>}
+            {(canEdit && !isEditing) && <Button transparent onClick={() => setIsEditing(true)} fullWidth={false}><Edit /></Button>}
           </HeaderContainer>
           {isEditing
             ? <EditTaskList tasks={tasks} openedDate={openedDate} setIsEditing={setIsEditing} />
-            : <CheckTaskList tasks={tasks} />
+            : <CheckTaskList tasks={tasks} openedDate={openedDate} />
           }
         </Wrapper>
       </PageContainer>

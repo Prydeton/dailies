@@ -39,13 +39,7 @@ export const Task = z.object({
 })
 export type Task = z.infer<typeof Task>
 
-const UpdateTaskInput = Task.omit({ user_id: true })
-type UpdateTaskInput = z.infer<typeof UpdateTaskInput>
-const UpdateTaskResponse = z.object({
-  task: Task
-})
-
-const UpdateDayTask = Task.omit({ user_id: true, date: true, order: true })
+const UpdateDayTask = Task.omit({ user_id: true, date: true })
 type UpdateDayTask = z.infer<typeof UpdateDayTask>
 type UpdateDayInput = {
   tasks: UpdateDayTask[]
@@ -59,5 +53,4 @@ export const Calendar = z.record(z.string(), z.array(Task))
 export type Calendar = z.infer<typeof Calendar>
 
 export const getCalendarApi = (access_token: string) => get('/calendar', Calendar, access_token)
-export const updateTaskApi = (access_token: string, task: UpdateTaskInput) => patch('/task', UpdateTaskResponse, task, access_token)
 export const updateDayApi = (access_token: string, day: UpdateDayInput) => patch('/day', UpdateDayResponse, day, access_token)

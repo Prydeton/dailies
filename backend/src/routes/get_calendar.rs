@@ -34,7 +34,6 @@ pub async fn get_calendar(
 
   let first_task_date;
   if tasks.is_empty() {
-    println!("h");
     let first_task = Task {
       id: Uuid::new_v4().to_string(),
       user_id: Uuid::new_v4().to_string(),

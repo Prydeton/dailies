@@ -86,10 +86,9 @@ async fn require_auth<T>(
     Err(ApiError::NotAuthorized)?
   };
 
-  if auth_header.starts_with("Bearer ") {
-    let token = auth_header.trim_start_matches("Bearer ");
+  if let Some(token) = auth_header.strip_prefix("Bearer ") {
     let token_secret = env::var("JWT_SECRET")
-      .expect("Expected JWT_SECRET in env variables");// Replace with your actual token secret
+      .expect("Expected JWT_SECRET in env variables");
 
     let validation = Validation::new(Algorithm::HS256);
 

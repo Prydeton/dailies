@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { SocialLoginButton } from '/src/components'
+import { env } from '/src/config'
 import { useAuthStore } from '/src/hooks'
 
 import { Error, FormWrapper, PageContainer, Title } from './Login.styles'
@@ -8,7 +9,7 @@ import { Error, FormWrapper, PageContainer, Title } from './Login.styles'
 const Login = () => {
   const [loginError, setLoginError] = useState<string>()
   const { signInWithOAuth } = useAuthStore()
-
+  console.log(env.FRONTEND_URL)
   const handleSignInWithProvider = async (provider: 'google' | 'github') => {
     const { error } = await signInWithOAuth(provider)
     setLoginError(error?.message)

@@ -2,7 +2,7 @@ import { styled } from 'goober'
 
 export const Container = styled('header')`
   background: var(--grey);
-  height: 80px;
+  height: 60px;
   position: relative;
   display: flex;
   justify-content: center;

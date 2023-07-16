@@ -11,10 +11,10 @@ const Header: FC = () => {
 
   return (
     <Container>
-      <Button style={{position: 'absolute', left: '20px' }} transparent={true} onClick={() => signOut()} fullWidth={false}>
+      <h2>Dailies</h2>
+      <Button style={{position: 'absolute', right: '0' }} transparent={true} onClick={() => signOut()} fullWidth={false}>
         <LogOut />
       </Button>
-      <h2>Dailies</h2>
     </Container>
   )
 }

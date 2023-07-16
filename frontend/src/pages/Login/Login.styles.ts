@@ -26,3 +26,13 @@ export const Title = styled('h1')`
 export const Error = styled('span')`
   color: var(--red);
 `
+
+export const PrivacyPolicy = styled('span')`
+  opacity: 0.6;
+  margin-top: 2em;
+
+  & a {
+    text-decoration: underline;
+    color: inherit;
+  }
+`

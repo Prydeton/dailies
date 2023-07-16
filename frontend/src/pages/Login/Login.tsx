@@ -4,7 +4,7 @@ import { useLocation } from 'wouter'
 import { Button } from '/src/components'
 import { useAuthStore } from '/src/hooks'
 
-import { Error, FormWrapper, PageContainer, Title } from './Login.styles'
+import { Error, FormWrapper, PageContainer, PrivacyPolicy, Title } from './Login.styles'
 
 const Login = () => {
   const [loginError, setLoginError] = useState<string>()
@@ -33,6 +33,7 @@ const Login = () => {
       >Continue with GitHub</Button>
       {loginError && <Error>{loginError}</Error>}
     </FormWrapper>
+    <PrivacyPolicy>View privacy policy <a href="/privacy">here</a></PrivacyPolicy>
   </PageContainer>)
 }
 

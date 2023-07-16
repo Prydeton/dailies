@@ -2,7 +2,7 @@ import { Route, Switch } from 'wouter'
 import { Redirect } from 'wouter'
 
 import { useAuthSetup } from './hooks/useAuth'
-import { Calendar, Login, Settings } from './pages'
+import { Calendar, Login, Privacy, Settings } from './pages'
 import './App.css'
 
 const App = () => {
@@ -13,6 +13,7 @@ const App = () => {
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/settings" component={Settings} />
+        <Route path="/privacy" component={Privacy} />
         <Route path="" component={Calendar} />
         <Redirect to="" />
       </Switch>

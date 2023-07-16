@@ -8,7 +8,7 @@ export const Container = styled('header')`
   justify-content: center;
   align-items: center;
 
-  h2 { 
+  h1 { 
     margin: 0;
   }
 `

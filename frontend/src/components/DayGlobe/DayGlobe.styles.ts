@@ -21,10 +21,7 @@ export const GlobeWrapper = styled('button')`
   `};
 `
 
-interface MonthProps {
-  disabled?: boolean
-}
-export const Month = styled('p')<MonthProps>`
+export const Month = styled('p')`
   text-align: center;
   position: absolute;
   top: 50%;
@@ -32,9 +29,7 @@ export const Month = styled('p')<MonthProps>`
   transform: translate(-50%, -50%);
   font-size: 1.3em;
   color: #bd93f9;
-  ${props => props.disabled && `
-    opacity: .5;
-  `};
+  font-weight: bold;
 `
 
 export const Container = styled('div')`

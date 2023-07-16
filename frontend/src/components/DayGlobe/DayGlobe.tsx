@@ -22,7 +22,7 @@ const DayGlobe: React.FC<DayGlobeProps> = ({ tasks, date, setOpenedDate }: DayGl
       <GlobeWrapper onClick={() => setOpenedDate(date)} disabled={tasks.length === 0}>
         <Wave fillPercentage={fillPercentage}/>
       </GlobeWrapper>
-      <Month>{new Date(date).getDate()}</Month>
+      <Month disabled={tasks.length === 0}>{new Date(date).getDate()}</Month>
     </Container>
   )
 }
@@ -30,6 +30,7 @@ const DayGlobe: React.FC<DayGlobeProps> = ({ tasks, date, setOpenedDate }: DayGl
 interface WaveProps {
   fillPercentage: number
 }
+
 const Wave: React.FC<WaveProps> = ({ fillPercentage }: WaveProps) => {
   return (
     <svg

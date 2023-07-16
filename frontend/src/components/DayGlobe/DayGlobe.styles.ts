@@ -14,11 +14,22 @@ export const GlobeWrapper = styled('button')`
     opacity: .5;
     cursor: default;
     background: transparent;
+
+    & p {
+      opacity: .5;
+    }
   `};
 `
 
-export const Month = styled('p')`
+interface MonthProps {
+  disabled?: boolean
+}
+export const Month = styled('p')<MonthProps>`
   text-align: center;
+
+  ${props => props.disabled && `
+    opacity: .5;
+  `};
 `
 
 export const Container = styled('div')`

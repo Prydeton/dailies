@@ -11,7 +11,7 @@ export const env = createEnv({
     API_URL: z.string().min(1).url(),
     FRONTEND_URL: z.string().min(1).url(),
     SUPABASE_URL: z.string().min(1).url(),
-    SUPABASE_PRIVATE_KEY: z.string().min(1),
+    SUPABASE_SECRET_KEY: z.string().min(1),
   },
   runtimeEnv: rawEnv,
 })

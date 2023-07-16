@@ -1,0 +1,61 @@
+{
+  "background_color": "#232530",
+  "description": "Track your consistency with daily tasks.",
+  "dir": "ltr",
+  "display": "fullscreen",
+  "name": "Dailies",
+  "orientation": "portrait",
+  "scope": "https://dailies.maxwellreid.tech/",
+  "short_name": "Dailies",
+  "start_url": "https://dailies.maxwellreid.tech/",
+  "theme_color": "#50fa7b",
+  "categories": [
+    "productivity",
+    "utilities"
+  ],
+  "screenshots": [],
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "android/android-launchericon-512-512.png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "android/android-launchericon-192-192.png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "android/android-launchericon-144-144.png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "android/android-launchericon-96-96.png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "android/android-launchericon-72-72.png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "android/android-launchericon-48-48.png",
+      "sizes": "48x48"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Login",
+      "url": "https://dailies.maxwellreid.tech/login",
+      "description": "Login to your account"
+    },
+    {
+      "name": "Calendar",
+      "url": "https://dailies.maxwellreid.tech/",
+      "description": "View the calendar"
+    }
+  ],
+  "lang": "en",
+  "prefer_related_applications": false
+}

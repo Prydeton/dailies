@@ -1,17 +1,14 @@
-
 import { styled } from 'goober'
 
-type GlobeWrapperProps = {
-  fillPercentage: number
-}
-
-export const GlobeWrapper = styled('button')<GlobeWrapperProps>`
+export const GlobeWrapper = styled('button')`
   height: 70px;
   width: 70px;
-  background: linear-gradient(to top, var(--neon-green) ${props => props.fillPercentage}%, transparent ${props => props.fillPercentage}%);
   border: 2px solid var(--white);
   border-radius: 50%;
   position: relative;
+  overflow: hidden;
+  padding: 0;
+  background-color: transparent;
 
   ${props => props.disabled && `
     opacity: .5;
@@ -28,5 +25,3 @@ export const Container = styled('div')`
   display: flex;
   flex-direction: column;
 `
-
-

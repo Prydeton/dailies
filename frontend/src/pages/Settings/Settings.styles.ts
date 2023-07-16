@@ -19,11 +19,11 @@ export const SettingsContainer = styled('div')`
 `
 
 export const Email = styled('span')`
-  font-size: 1.5em;
+  font-size: 1.2em;
 `
 
 export const SignupDate = styled('span')`
-  font-size: 1em;
+  font-size: .8em;
 `
 
 

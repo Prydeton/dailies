@@ -1,28 +1,30 @@
 import { useEffect } from 'react'
 import { useLocation } from 'wouter'
 
-import { Button, Spinner } from '/src/components'
+import { Button, Header, Spinner } from '/src/components'
 import { useAuthStore } from '/src/hooks'
 
 import { Email, PageContainer, SettingsContainer, SignupDate } from './Settings.styles'
 
 const Settings = () => {
-  const { session, isAuthLoading } = useAuthStore()
+  const { session, isAuthLoading, deleteUser, signOut } = useAuthStore()
   const [, setLocation] = useLocation()
 
   useEffect(() => {
     if (!isAuthLoading && !session) setLocation('/login')
   }, [isAuthLoading, session])
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    if (!session?.user.id) return
     if (confirm('Are you sure you would like to delete your account?')) {
-      return
-    } else {
-      return
+      const res = await deleteUser()
+      if (!res?.error) return signOut()
+      console.warn(res.error)
     }
   }
 
-  return (
+  return (<>
+    <Header />
     <PageContainer>
       {
         (isAuthLoading || !session) ?
@@ -34,7 +36,7 @@ const Settings = () => {
           </SettingsContainer>
       }
     </PageContainer>
-  )
+  </>)
 }
 
 export default Settings

@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { AuthError, OAuthResponse, Session } from '@supabase/supabase-js'
+import { OAuthResponse, Session, UserResponse } from '@supabase/supabase-js'
 import { create } from 'zustand'
 
 import { env } from '/src/config'
@@ -13,7 +13,8 @@ interface AuthStore {
   isAuthLoading: boolean,
   setIsAuthLoading: (isAuthLoading: boolean) => void,
   signInWithOAuth: (provider: supportedOAuthProviers) => Promise<OAuthResponse>
-  signOut: () => Promise<{ error: AuthError | null }>
+  signOut: () => Promise<{ error: Error | null }>
+  deleteUser: () => Promise<UserResponse | undefined>
 }
 
 export const useAuthStore = create<AuthStore>()(set => ({
@@ -27,7 +28,14 @@ export const useAuthStore = create<AuthStore>()(set => ({
       redirectTo: env.FRONTEND_URL
     }
   }),
-  signOut: () => supabase.auth.signOut()
+  signOut: () => supabase.auth.signOut(),
+  deleteUser: async () =>  {
+    const session = await supabase.auth.getSession()
+    if (!session.data.session?.user) return
+    return supabase.auth.admin.deleteUser(
+      session.data.session.user.id
+    )
+  }
 }))
 
 export const useAuthSetup = () => {

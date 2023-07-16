@@ -31,7 +31,7 @@ const Privacy = () => (
       <p>This Privacy Policy may be updated from time to time. Thus, you are advised to review this page periodically for any changes. Last updated: 2023-06-10</p>
 
       <h3>Contact Me</h3>
-      <p>If you have any questions or suggestions about the Privacy Policy, do not hesitate to contact me at maxwellreid.tech@gmail.com</p>.
+      <p>If you have any questions or suggestions about the Privacy Policy, do not hesitate to contact me at maxwellreid.tech@gmail.com.</p>
     </PageContainer>
   </>
 )

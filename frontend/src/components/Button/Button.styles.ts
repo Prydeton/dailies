@@ -27,6 +27,11 @@ export const StyledButton = styled('button')`
     color: var(--white);
   }
 
+  &.danger {
+    background-color: var(--red);
+    color: var(--white);
+  }
+
   &.disabled{
     opacity: .5;
     cursor: default;

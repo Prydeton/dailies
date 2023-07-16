@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "tech.maxwellreid.dailies",
+    "sha256_cert_fingerprints": ["DD:A9:25:FB:57:22:34:64:59:02:BC:B6:ED:0F:7D:3F:2C:AB:02:5E:73:DB:58:73:FD:61:39:77:38:9E:23:6E"]
+  }
+}]

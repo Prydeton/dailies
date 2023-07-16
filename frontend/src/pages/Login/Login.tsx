@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useLocation } from 'wouter'
 
 import { Button } from '/src/components'
 import { useAuthStore } from '/src/hooks'
@@ -7,7 +8,12 @@ import { Error, FormWrapper, PageContainer, Title } from './Login.styles'
 
 const Login = () => {
   const [loginError, setLoginError] = useState<string>()
-  const { signInWithOAuth } = useAuthStore()
+  const { signInWithOAuth, isAuthLoading, session } = useAuthStore()
+  const [, setLocation] = useLocation()
+
+  useEffect(() => {
+    if (!isAuthLoading && session) setLocation('/')
+  }, [isAuthLoading, session])
 
   const handleSignInWithProvider = async (provider: 'google' | 'github') => {
     const { error } = await signInWithOAuth(provider)

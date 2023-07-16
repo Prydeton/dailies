@@ -57,5 +57,12 @@
     }
   ],
   "lang": "en",
-  "prefer_related_applications": false
+  "prefer_related_applications": false,
+  "display_override": [
+    "fullscreen",
+    "standalone",
+    "minimal-ui",
+    "browser",
+    "window-controls-overlay"
+  ]
 }

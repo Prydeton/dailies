@@ -13,7 +13,18 @@
     "productivity",
     "utilities"
   ],
-  "screenshots": [],
+  "screenshots": [
+    {
+      "src": "/Users/max/Desktop/screenshots2/1280x800-screenshot.png",
+      "sizes": "1280x800",
+      "type": "image/png"
+    },
+    {
+      "src": "/Users/max/Desktop/screenshots2/750x1334-screenshot.png",
+      "sizes": "750x1334",
+      "type": "image/png"
+    }
+  ],
   "icons": [
     {
       "src": "android/android-launchericon-512-512.png",

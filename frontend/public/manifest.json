@@ -66,12 +66,5 @@
     }
   ],
   "lang": "en",
-  "prefer_related_applications": false,
-  "display_override": [
-    "minimal-ui",
-    "window-controls-overlay",
-    "standalone",
-    "browser",
-    "fullscreen"
-  ]
+  "prefer_related_applications": false
 }

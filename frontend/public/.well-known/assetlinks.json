@@ -3,6 +3,6 @@
   "target": {
     "namespace": "android_app",
     "package_name": "tech.maxwellreid.dailies",
-    "sha256_cert_fingerprints": ["E7:7D:5D:81:55:E6:A0:22:EE:39:37:7D:5B:E8:36:67:1D:23:B7:59:45:6D:F8:CC:6F:49:AB:55:18:32:B3:68"]
+    "sha256_cert_fingerprints": ["88:57:CC:27:22:BB:9A:FA:38:E7:5F:CC:B3:D1:05:E7:F8:00:04:73:EC:AF:A6:18:98:F5:40:32:14:AD:4F:8A"]
   }
 }]

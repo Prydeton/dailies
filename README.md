@@ -1,4 +1,4 @@
-# Dailies <img width="100" align="right" src="frontend/publc/dailies-icon.svg" alt="Dailies icon">
+# Dailies <img width="100" align="right" src="frontend/public/dailies-icon-512.png" alt="Dailies icon">
 
 Track your consistency of daily tasks.
 Open-source and licensed under [MIT](./LICENSE).

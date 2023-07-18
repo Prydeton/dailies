@@ -15,6 +15,7 @@ const App = () => {
   useEffect(() => {
     setFavicon(calendar)
   }, [calendar])
+
   return (
     <>
       <Switch>

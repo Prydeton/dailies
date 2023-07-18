@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useMemo } from 'react'
 
 import { Task } from '/src/config/api'
+import { calculateFillPercentage, lerp } from '/src/utils'
 
 import { Container, GlobeWrapper, Month } from './DayGlobe.styles'
 
@@ -11,11 +12,7 @@ interface DayGlobeProps {
 }
 
 const DayGlobe: React.FC<DayGlobeProps> = ({ tasks, date, setOpenedDate }: DayGlobeProps) => {
-  const fillPercentage = useMemo(() => {
-    if (tasks.length === 0) return 0
-    const completedTasks = tasks.filter(task => task.is_complete)
-    return (completedTasks.length / tasks.length) * 100
-  }, [tasks])
+  const fillPercentage = useMemo(() => calculateFillPercentage(tasks), [tasks])
 
   return (
     <Container>
@@ -36,7 +33,7 @@ const Wave: React.FC<WaveProps> = ({ fillPercentage }: WaveProps) => {
     <svg
       width="100%"
       height="100%"
-      viewBox={`0 ${-950 + (fillPercentage / 100) * (150 - -950)} 1000 1000`}
+      viewBox={`0 ${lerp(-950, 150, fillPercentage)} 1000 1000`}
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="none"
       overflow="auto"

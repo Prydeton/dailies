@@ -1,5 +1,6 @@
 import { Dispatch, FC, SetStateAction, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
+import dayjs from 'dayjs'
 import { Edit } from 'lucide-react'
 
 import { Button, CheckTaskList, EditTaskList } from '/src/components'
@@ -16,7 +17,7 @@ type DayProps = {
 
 const Day: FC<DayProps> = ({ openedDate, tasks, closeFn }: DayProps) => {
   const [isEditing, setIsEditing] = useState(false)
-  const canEdit = useMemo(() => openedDate === new Date().toISOString().substring(0, 10), [openedDate])
+  const canEdit = useMemo(() => openedDate === dayjs().format('YYYY-MM-DD'), [openedDate])
 
   return createPortal(
     <>

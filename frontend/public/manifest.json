@@ -2,13 +2,13 @@
   "background_color": "#232530",
   "description": "Track your consistency with daily tasks.",
   "dir": "ltr",
-  "display": "fullscreen",
+  "display": "standalone",
   "name": "Dailies",
   "orientation": "portrait",
   "scope": "https://dailies.maxwellreid.tech/",
   "short_name": "Dailies",
   "start_url": "https://dailies.maxwellreid.tech/",
-  "theme_color": "#50fa7b",
+  "theme_color": "#232530",
   "categories": [
     "productivity",
     "utilities"
@@ -68,10 +68,10 @@
   "lang": "en",
   "prefer_related_applications": false,
   "display_override": [
-    "fullscreen",
-    "standalone",
     "minimal-ui",
+    "window-controls-overlay",
+    "standalone",
     "browser",
-    "window-controls-overlay"
+    "fullscreen"
   ]
 }

@@ -2,7 +2,7 @@ use axum::{
     extract,
     http::{
         header::{AUTHORIZATION, CONTENT_TYPE},
-        HeaderMap, HeaderValue, Method, Request,
+        HeaderMap, HeaderName, HeaderValue, Method, Request,
     },
     middleware::{self, Next},
     response::Response,
@@ -42,7 +42,11 @@ async fn main() {
     }));
 
     let cors = CorsLayer::new()
-        .allow_headers([AUTHORIZATION, CONTENT_TYPE])
+        .allow_headers([
+            AUTHORIZATION,
+            CONTENT_TYPE,
+            HeaderName::from_static("x-timezone"),
+        ])
         .allow_methods([Method::GET, Method::PATCH])
         .allow_origin(
             if cfg!(debug_assertions) {

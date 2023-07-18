@@ -6,6 +6,7 @@ const get = async <S extends z.Schema>(url: string, schema: S, access_token: str
   const res = await fetch(new URL(url, env.API_URL), {
     headers: {
       Authorization: `Bearer ${access_token}`,
+      'x-timezone': Intl.DateTimeFormat().resolvedOptions().timeZone
     },
   })
     .catch(console.warn)

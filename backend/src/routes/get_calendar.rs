@@ -1,5 +1,6 @@
-use axum::{extract::State, Extension, Json};
+use axum::{extract::State, http::HeaderMap, Extension, Json};
 use chrono::{prelude::*, Duration};
+use chrono_tz::Tz;
 use serde_json::from_str;
 use std::{collections::HashMap, sync::Arc};
 use tokio::sync::Mutex;
@@ -14,6 +15,7 @@ use crate::{
 pub async fn get_calendar(
     state: State<Arc<Mutex<ApiState>>>,
     Extension(user_id): Extension<String>,
+    headers: HeaderMap,
 ) -> ApiResult<Calendar> {
     let db = &state.lock().await.db;
 
@@ -30,7 +32,16 @@ pub async fn get_calendar(
         .map_err(|error| ApiError::PostgrestrsError(error.to_string()))?;
 
     let mut calendar = HashMap::new();
-    let current_date = Local::now().naive_local().date();
+
+    let timezone: Tz = headers
+        .get("x-timezone")
+        .and_then(|timezone| timezone.to_str().ok())
+        .and_then(|timezone_str| timezone_str.parse::<Tz>().ok())
+        .unwrap_or(Tz::UTC);
+
+    let current_date = timezone
+        .from_utc_datetime(&Local::now().naive_utc())
+        .date_naive();
 
     let first_task_date = if tasks.is_empty() {
         let first_task = Task {

@@ -42,5 +42,10 @@
     "extends": [
       "react-app"
     ]
+  },
+  "overrides": {
+    "@supabase/supabase-js": {
+      "@supabase/gotrue-js": "2.43.1"
+    }
   }
 }

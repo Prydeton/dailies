@@ -9,7 +9,7 @@ export const PageContainer = styled('main')`
   overflow-y: scroll;
 
   @media screen and (max-width: 450px)  {
-    padding: 1.5em;
+    padding: 1.5em 1.5em 3em 1.5em;
   }
 
   & a {

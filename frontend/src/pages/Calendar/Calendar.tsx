@@ -1,26 +1,20 @@
 import { useEffect, useMemo, useState } from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight } from 'lucide-react'
-import { useLocation } from 'wouter'
 
 import { DayGlobe, Header, Spinner } from '/src/components'
 import { Calendar } from '/src/config/api'
 import { useCalendarStore } from '/src/hooks'
-import { useAuthStore } from '/src/hooks/useAuth'
 
 import { ControlButton, ControlMonth, ControlsContainer, ControlsWrapper, ControlYear, MonthContainer, PageContainer } from './Calendar.styles'
 import { Day } from '..'
 
 const Main = () => {
-  const { isAuthLoading, session } = useAuthStore()
   const { calendar, loading: isCalendarLoading, getCalendar } = useCalendarStore()
-  const [, setLocation] = useLocation()
 
   useEffect(() => {
-    if (!isAuthLoading) {
-      !session ? setLocation('/login') : getCalendar()
-    }
-  }, [isAuthLoading, session])
+    getCalendar()
+  }, [])
 
   const [currentPage, setCurrentPage] = useState<Dayjs>(dayjs().startOf('month'))
   const [firstPage, setFirstPage] = useState<Dayjs | undefined>()
@@ -83,13 +77,12 @@ const Main = () => {
       <ControlYear>{currentPage.year()}</ControlYear>
     </ControlsWrapper>
 
-    <MonthContainer>
-      {isCalendarLoading || !currentMonthTasks ?
-        <Spinner center={true} /> : <>
-          {Object.entries(currentMonthTasks).map(([date, tasks]) => (<DayGlobe key={date} date={date} setOpenedDate={() => setOpenedDate(date)} tasks={tasks} />))}
-        </>
-      }
-    </MonthContainer>
+    {isCalendarLoading || !currentMonthTasks ?
+      <Spinner center={true} /> :
+      <MonthContainer>
+        {Object.entries(currentMonthTasks).map(([date, tasks]) => (<DayGlobe key={date} date={date} setOpenedDate={() => setOpenedDate(date)} tasks={tasks} />))}
+      </MonthContainer>
+    }
 
     <Day openedDate={openedDate} tasks={openedDayTasks} closeFn={() => setOpenedDate(undefined)} />
   </PageContainer>)

@@ -1,15 +1,14 @@
 import { useEffect } from 'react'
-import { Route, Switch } from 'wouter'
+import { Route, Router, Switch } from 'wouter'
 import { Redirect } from 'wouter'
 
 import { useCalendarStore } from './hooks'
-import { useAuthSetup } from './hooks/useAuth'
 import { Calendar, Login, Privacy, Settings } from './pages'
 import { setFavicon } from './utils'
+import { AuthRoute, NoAuthRoute } from './utils/AuthRoutes'
 import './App.css'
 
 const App = () => {
-  useAuthSetup()
   const { calendar } = useCalendarStore()
 
   useEffect(() => {
@@ -17,15 +16,15 @@ const App = () => {
   }, [calendar])
 
   return (
-    <>
+    <Router>
       <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/settings" component={Settings} />
+        <NoAuthRoute path="/login" component={Login} />
+        <AuthRoute path="/settings" component={Settings} />
+        <AuthRoute path="/" component={Calendar} />
         <Route path="/privacy" component={Privacy} />
-        <Route path="" component={Calendar} />
-        <Redirect to="" />
+        <Redirect to="/" />
       </Switch>
-    </>
+    </Router>
   )
 }
 

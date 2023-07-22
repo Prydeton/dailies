@@ -1,3 +1,4 @@
+// authStore.ts
 import { useEffect } from 'react'
 import { OAuthResponse, Session, UserResponse } from '@supabase/supabase-js'
 import { create } from 'zustand'
@@ -8,20 +9,14 @@ import { supabase } from '/src/libs'
 export type supportedOAuthProviers = 'google' | 'github'
 
 interface AuthStore {
-  session: Session | null
-  setSession: (session: Session | null) => void,
-  isAuthLoading: boolean,
-  setIsAuthLoading: (isAuthLoading: boolean) => void,
+  session: Session | null;
   signInWithOAuth: (provider: supportedOAuthProviers) => Promise<OAuthResponse>
-  signOut: () => Promise<{ error: Error | null }>
+  signOut: () => Promise<{ error: Error | null }>;
   deleteUser: () => Promise<UserResponse | undefined>
 }
 
-export const useAuthStore = create<AuthStore>()(set => ({
+export const useAuthStore = create<AuthStore>()((_, get) => ({
   session: null,
-  setSession: session => set({ session }),
-  isAuthLoading: true,
-  setIsAuthLoading: isAuthLoading => set({ isAuthLoading }),
   signInWithOAuth: async provider => supabase.auth.signInWithOAuth({
     provider: provider,
     options: {
@@ -30,33 +25,33 @@ export const useAuthStore = create<AuthStore>()(set => ({
   }),
   signOut: () => supabase.auth.signOut(),
   deleteUser: async () =>  {
-    const session = await supabase.auth.getSession()
-    if (!session.data.session?.user) return
+    const session = get().session
+    if (!session) return
     return supabase.auth.admin.deleteUser(
-      session.data.session.user.id
+      session.user.id
     )
   }
 }))
 
-export const useAuthSetup = () => {
-  const { setSession, setIsAuthLoading } = useAuthStore()
+const useAuth = () => {
+  const session = useAuthStore(state => state.session)
+  const signInWithOAuth = useAuthStore(state => state.signInWithOAuth)
+  const signOut = useAuthStore(state => state.signOut)
+  const deleteUser = useAuthStore(state => state.deleteUser)
 
   useEffect(() => {
-    const updateSession = async () => {
-      console.log('Updating session')
-      const session = await supabase.auth.getSession()
-      setSession(session?.data?.session)
-      setIsAuthLoading(false)
+    const handleAuthChange = (_: string, session: Session | null ) => {
+      useAuthStore.setState({ session })
     }
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      console.log('Changed')
-      setSession(session)
-      setIsAuthLoading(false)
-    })
+    const authSubscription = supabase.auth.onAuthStateChange(handleAuthChange)
 
-    updateSession()
+    return () => {
+      authSubscription.data.subscription.unsubscribe()
+    }
   }, [])
+
+  return { session, signInWithOAuth, signOut, deleteUser }
 }
 
-export default useAuthStore
+export default useAuth

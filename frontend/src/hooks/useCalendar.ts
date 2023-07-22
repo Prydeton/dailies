@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 import { Calendar, getCalendarApi, Task, updateDayApi } from '/src/config/api'
 
-import { useAuthStore } from '.'
+import { useAuthStore } from './useAuth'
 
 interface CalendarStore {
   calendar: Calendar | null;

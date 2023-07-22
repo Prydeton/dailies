@@ -2,13 +2,13 @@ import { FC } from 'react'
 import { Calendar, LogIn, LogOut, Settings } from 'lucide-react'
 import { useLocation } from 'wouter'
 
-import { useAuthStore } from '/src/hooks'
+import { useAuth } from '/src/hooks'
 
 import { Container } from './Header.styles'
 import { Button } from '..'
 
 const Header: FC = () => {
-  const { signOut, session } = useAuthStore()
+  const { signOut, session } = useAuth()
   const [location, setLocation] = useLocation()
 
   return (

@@ -43,12 +43,14 @@ export const useAuthSetup = () => {
 
   useEffect(() => {
     const updateSession = async () => {
+      console.log('Updating session')
       const session = await supabase.auth.getSession()
       setSession(session?.data?.session)
       setIsAuthLoading(false)
     }
 
     supabase.auth.onAuthStateChange((_event, session) => {
+      console.log('Changed')
       setSession(session)
       setIsAuthLoading(false)
     })

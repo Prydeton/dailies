@@ -12,6 +12,7 @@ const Login = () => {
   const handleSignInWithProvider = async (provider: 'google' | 'github') => {
     const res = await signInWithOAuth(provider)
     console.log({res})
+    setLoginError('Temp')
   }
 
   return (<PageContainer>

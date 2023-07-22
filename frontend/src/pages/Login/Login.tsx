@@ -10,8 +10,8 @@ const Login = () => {
   const { signInWithOAuth } = useAuth()
 
   const handleSignInWithProvider = async (provider: 'google' | 'github') => {
-    const { error } = await signInWithOAuth(provider)
-    setLoginError(error?.message)
+    const res = await signInWithOAuth(provider)
+    console.log({res})
   }
 
   return (<PageContainer>

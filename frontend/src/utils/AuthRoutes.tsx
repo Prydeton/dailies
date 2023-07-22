@@ -14,7 +14,6 @@ export const AuthRoute: React.FC<RouteProps> = ({ ...props }) => {
 
 export const NoAuthRoute: React.FC<RouteProps> = ({ ...props }) => {
   const { session } = useAuth()
-  console.log({session})
   if (!session?.user) {
     return <Route {...props} />
   } else {

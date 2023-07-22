@@ -4,13 +4,12 @@ import { useAuth } from '/src/hooks'
 import { Email, PageContainer, SettingsContainer, SignupDate } from './Settings.styles'
 
 const Settings = () => {
-  const { session, deleteUser, signOut } = useAuth()
+  const { session, deleteUser } = useAuth()
 
   const handleDelete = async () => {
     if (confirm('Are you sure you would like to delete your account?')) {
       const res = await deleteUser()
-      if (!res?.error) return signOut()
-      console.warn(res.error)
+      if (res?.error) console.warn(res.error)
     }
   }
 

@@ -41,6 +41,7 @@ const useAuth = () => {
 
   useEffect(() => {
     const handleAuthChange = (_: string, session: Session | null ) => {
+      console.log({session})
       useAuthStore.setState({ session })
     }
 

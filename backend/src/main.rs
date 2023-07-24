@@ -6,7 +6,7 @@ use axum::{
     },
     middleware::{self, Next},
     response::Response,
-    routing::{get, patch},
+    routing::{delete, get, patch},
     Json, Router, Server,
 };
 use chrono::Utc;
@@ -14,7 +14,7 @@ use db::connect_to_database;
 use error::ApiError;
 use jsonwebtoken::{decode, Algorithm, DecodingKey, TokenData, Validation};
 use postgrest::Postgrest;
-use routes::{get_calendar::get_calendar, update_day::update_day};
+use routes::{delete_user::delete_user, get_calendar::get_calendar, update_day::update_day};
 use serde::{Deserialize, Serialize};
 use std::{env, net::SocketAddr, sync::Arc};
 use tokio::sync::Mutex;
@@ -27,6 +27,7 @@ mod routes;
 
 pub struct ApiState {
     db: Postgrest,
+    auth_db: Postgrest,
 }
 
 pub type State = extract::State<Arc<Mutex<ApiState>>>;
@@ -37,9 +38,8 @@ async fn main() {
 
     env::var("JWT_SECRET").expect("Expected JWT_SECRET in env variables");
 
-    let shared_state = Arc::new(Mutex::new(ApiState {
-        db: connect_to_database().await,
-    }));
+    let (db, auth_db) = connect_to_database().await;
+    let shared_state = Arc::new(Mutex::new(ApiState { db, auth_db }));
 
     let cors = CorsLayer::new()
         .allow_headers([
@@ -62,6 +62,7 @@ async fn main() {
         .route("/ping", get(ping_handler))
         .route("/calendar", get(get_calendar))
         .route("/day", patch(update_day))
+        .route("/user", delete(delete_user))
         .route_layer(middleware::from_fn_with_state(
             shared_state.clone(),
             require_auth,

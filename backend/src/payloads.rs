@@ -38,16 +38,7 @@ pub struct UpdateDayResponse {
     pub tasks: Vec<Task>,
 }
 
-#[derive(Deserialize)]
-pub struct UpdateTaskInput {
-    pub id: String,
-    pub name: String,
-    pub is_complete: bool,
-    pub date: String,
-    pub order: i32,
-}
-
 #[derive(Serialize, Deserialize)]
-pub struct UpdateTaskResponse {
-    pub task: Task,
+pub struct DeleteUserResponse {
+    pub user_id: String,
 }

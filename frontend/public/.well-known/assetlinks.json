@@ -1,8 +1,11 @@
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "tech.maxwellreid.dailies",
-    "sha256_cert_fingerprints": ["E7:7D:5D:81:55:E6:A0:22:EE:39:37:7D:5B:E8:36:67:1D:23:B7:59:45:6D:F8:CC:6F:49:AB:55:18:32:B3:68"]
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "tech.maxwellreid.dailies",
+      "sha256_cert_fingerprints":
+        ["A5:02:C0:0D:08:E7:22:8F:25:AF:E4:AF:82:46:38:DF:E9:A5:15:3E:85:66:BF:20:3F:75:4E:87:B9:A6:1A:FC"]
+    }
   }
-}]
+]

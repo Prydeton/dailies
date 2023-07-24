@@ -43,7 +43,7 @@
       "react-app"
     ]
   },
-  "overrides": {
+  "resolutions": {
     "@supabase/supabase-js": "2.24.0",
     "@supabase/gotrue-js": "2.38.0"
   }

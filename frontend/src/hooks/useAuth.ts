@@ -40,9 +40,7 @@ const useAuth = () => {
   const deleteUser = useAuthStore(state => state.deleteUser)
 
   useEffect(() => {
-    const handleAuthChange = (event: string, session: Session | null ) => {
-      console.log({session})
-      console.log({event})
+    const handleAuthChange = (_: string, session: Session | null ) => {
       useAuthStore.setState({ session })
     }
 

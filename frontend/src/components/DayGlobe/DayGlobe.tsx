@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useMemo } from 'react'
 
-import { Task } from '/src/config/api'
+import { Task } from '/src/hooks/useCalendarQuery'
 import { calculateFillPercentage, lerp } from '/src/utils'
 
 import { Container, GlobeWrapper, Month } from './DayGlobe.styles'

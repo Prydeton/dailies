@@ -1,7 +1,7 @@
-import { Calendar } from '/src/config/api'
+import { Calendar } from '/src/hooks/useCalendarQuery'
 import { Favicon } from '/src/res/Favicon'
 
-const setFavicon = (calendar: Calendar | null) => {
+const setFavicon = (calendar: Calendar | undefined) => {
   const existingFavicon = document.head.querySelector<HTMLLinkElement>('link[rel="icon"]')
   if (existingFavicon) {
     const faviconSvgString = Favicon(calendar)

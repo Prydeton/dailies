@@ -1,19 +1,20 @@
 import dayjs from 'dayjs'
 
-import { Calendar, Task } from '/src/config/api'
+import { Calendar } from '/src/hooks/useCalendarQuery'
 import { calculateFillPercentage, lerp } from '/src/utils'
 
-export const Favicon = (calendar: Calendar | null) => {
+export const Favicon = (calendar: Calendar | undefined) => {
   const currentDate = dayjs()
+  const emptyY = 250
+  const fullY = -250
 
-  const calculateLiquidY = (tasks: Task[]) => {
-    const fillPercentage = calculateFillPercentage(tasks)
-    const emptyY = 250
-    const fullY = -250
+
+  const calculateLiquidY = (calendar: Calendar | undefined) => {
+    const fillPercentage = calendar ? calculateFillPercentage(calendar[currentDate.format('YYYY-MM-DD')]) : 0.5
     return lerp(emptyY, fullY, fillPercentage)
   }
 
-  const liquidY = calendar ? calculateLiquidY(calendar[currentDate.format('YYYY-MM-DD')]) : 0
+  const liquidY = calculateLiquidY(calendar)
 
   return `<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g clip-path="url(#clip)">

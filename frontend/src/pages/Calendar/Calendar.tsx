@@ -3,18 +3,17 @@ import dayjs, { Dayjs } from 'dayjs'
 import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight } from 'lucide-react'
 
 import { DayGlobe, Header, Spinner } from '/src/components'
-import { Calendar } from '/src/config/api'
-import { useCalendarStore } from '/src/hooks'
+import { useCalendarQuery } from '/src/hooks'
+import { Calendar } from '/src/hooks/useCalendarQuery'
 
 import { ControlButton, ControlMonth, ControlsContainer, ControlsWrapper, ControlYear, MonthContainer, PageContainer } from './Calendar.styles'
 import { Day } from '..'
 
 const Main = () => {
-  const { calendar, loading: isCalendarLoading, getCalendar } = useCalendarStore()
-
-  useEffect(() => {
-    getCalendar()
-  }, [])
+  const {
+    calendar,
+    loading,
+  } = useCalendarQuery()
 
   const [currentPage, setCurrentPage] = useState<Dayjs>(dayjs().startOf('month'))
   const [firstPage, setFirstPage] = useState<Dayjs | undefined>()
@@ -33,7 +32,7 @@ const Main = () => {
     }
   }, [sortedCalendar])
 
-  const currentMonthTasks: Calendar | null = useMemo(() => calendar &&
+  const currentMonthTasks: Calendar | undefined = useMemo(() => calendar &&
     Object.keys(calendar)
       .filter(date => dayjs(date).month() === currentPage.month())
       .sort((a, b) => dayjs(a).isBefore(dayjs(b)) ? -1 : 1)
@@ -77,7 +76,7 @@ const Main = () => {
       <ControlYear>{currentPage.year()}</ControlYear>
     </ControlsWrapper>
 
-    {isCalendarLoading || !currentMonthTasks ?
+    {loading || !currentMonthTasks ?
       <Spinner center={true} /> :
       <MonthContainer>
         {Object.entries(currentMonthTasks).map(([date, tasks]) => (<DayGlobe key={date} date={date} setOpenedDate={() => setOpenedDate(date)} tasks={tasks} />))}

@@ -8,10 +8,10 @@ export const env = createEnv({
   server: {},
   client: {
     NODE_ENV: z.enum(['development', 'production']).default('development'),
-    API_URL: z.string().min(1).url(),
+    BACKEND_URL: z.string().min(1).url(),
     FRONTEND_URL: z.string().min(1).url(),
     SUPABASE_URL: z.string().min(1).url(),
-    SUPABASE_SECRET_KEY: z.string().min(1),
+    SUPABASE_KEY: z.string().min(1),
   },
   runtimeEnv: rawEnv,
 })

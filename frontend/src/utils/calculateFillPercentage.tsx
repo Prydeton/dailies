@@ -1,4 +1,4 @@
-import { Task } from '../config/api'
+import { Task } from '/src/hooks/useCalendarQuery'
 
 const calculateFillPercentage = (tasks: Task[]) => {
   if (tasks.length === 0) return 0

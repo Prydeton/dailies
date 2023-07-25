@@ -6,7 +6,7 @@ import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } 
 import { CSS } from '@dnd-kit/utilities'
 import { GripVertical, Trash2 } from 'lucide-react'
 
-import { useCalendarStore } from '/src/hooks'
+import { useCalendarQuery } from '/src/hooks'
 
 import { ButtonContainer, Container, DragHandleWrapper, List, Row, TextInput } from './EditTaskList.styles'
 import { Button } from '..'
@@ -76,7 +76,7 @@ interface EditTaskListProps {
 }
 
 const EditTaskList = ({ tasks, openedDate, setIsEditing }: EditTaskListProps) => {
-  const { updateDay } = useCalendarStore()
+  const { updateDay } = useCalendarQuery()
 
   interface DefaultValues {
     tasks: Task[]

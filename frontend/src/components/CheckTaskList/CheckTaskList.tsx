@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import { Check,  } from 'lucide-react'
 
-import { Task } from '/src/config/api'
-import { useCalendarStore } from '/src/hooks'
+import { useCalendarQuery } from '/src/hooks'
+import { Task } from '/src/hooks/useCalendarQuery'
 
 import { CheckButton, CheckItemContainer, Name } from './CheckTaskList.styles'
 
@@ -12,7 +12,7 @@ interface CheckTaskListProps {
 }
 
 const CheckTaskList: FC<CheckTaskListProps> = ({ tasks, openedDate }: CheckTaskListProps) => {
-  const { updateDay } = useCalendarStore()
+  const { updateDay } = useCalendarQuery()
 
   return (
     <>

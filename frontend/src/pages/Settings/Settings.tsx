@@ -19,7 +19,7 @@ const Settings = () => {
       <SettingsContainer>
         <Email>{session.user.email}</Email>
         <SignupDate>Signed up {new Date(session.user.created_at).toISOString().substring(0, 10)}</SignupDate>
-        <Button fullWidth={false} danger onClick={handleDelete}>Delete Acount</Button>
+        <Button fullWidth={false} danger onClick={handleDelete}>Delete account</Button>
       </SettingsContainer>
     </PageContainer>
   </>)

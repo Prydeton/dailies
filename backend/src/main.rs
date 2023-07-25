@@ -27,7 +27,6 @@ mod routes;
 
 pub struct ApiState {
     db: Postgrest,
-    auth_db: Postgrest,
 }
 
 pub type State = extract::State<Arc<Mutex<ApiState>>>;
@@ -38,8 +37,9 @@ async fn main() {
 
     env::var("JWT_SECRET").expect("Expected JWT_SECRET in env variables");
 
-    let (db, auth_db) = connect_to_database().await;
-    let shared_state = Arc::new(Mutex::new(ApiState { db, auth_db }));
+    let shared_state = Arc::new(Mutex::new(ApiState {
+        db: connect_to_database().await,
+    }));
 
     let cors = CorsLayer::new()
         .allow_headers([
@@ -47,7 +47,7 @@ async fn main() {
             CONTENT_TYPE,
             HeaderName::from_static("x-timezone"),
         ])
-        .allow_methods([Method::GET, Method::PATCH])
+        .allow_methods([Method::GET, Method::PATCH, Method::DELETE])
         .allow_origin(
             if cfg!(debug_assertions) {
                 "http://localhost:5173".to_owned()

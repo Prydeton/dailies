@@ -8,7 +8,7 @@ use uuid::Uuid;
 
 use crate::{
     error::ApiError,
-    payloads::{ApiResult, Calendar, Task},
+    payloads::{ApiResult, Calendar, GetCalendarResponse, Task},
     ApiState,
 };
 
@@ -16,7 +16,7 @@ pub async fn get_calendar(
     state: State<Arc<Mutex<ApiState>>>,
     Extension(user_id): Extension<String>,
     headers: HeaderMap,
-) -> ApiResult<Calendar> {
+) -> ApiResult<GetCalendarResponse> {
     let db = &state.lock().await.db;
 
     let res = db
@@ -110,5 +110,7 @@ pub async fn get_calendar(
             date += Duration::days(1);
         }
     }
-    Ok(Json(Calendar(calendar)))
+    Ok(Json(GetCalendarResponse {
+        calendar: Calendar(calendar),
+    }))
 }

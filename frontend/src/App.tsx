@@ -2,18 +2,19 @@ import { useEffect } from 'react'
 import { Route, Router, Switch } from 'wouter'
 import { Redirect } from 'wouter'
 
-import { useCalendarStore } from './hooks'
+import { useAuth, useCalendarQuery } from './hooks'
 import { Calendar, Login, Privacy, Settings } from './pages'
 import { setFavicon } from './utils'
 import { AuthRoute, NoAuthRoute } from './utils/AuthRoutes'
 import './App.css'
 
 const App = () => {
-  const { calendar } = useCalendarStore()
+  const { calendar } = useCalendarQuery()
+  const { session } = useAuth()
 
   useEffect(() => {
-    setFavicon(calendar)
-  }, [calendar])
+    session ? setFavicon(calendar) : setFavicon(undefined)
+  }, [calendar, session])
 
   return (
     <Router>

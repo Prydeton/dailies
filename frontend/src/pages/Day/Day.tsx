@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { Edit } from 'lucide-react'
 
 import { Button, CheckTaskList, EditTaskList } from '/src/components'
-import { Task } from '/src/config/api'
+import { Task } from '/src/hooks/useCalendarQuery'
 import handle from '/src/res/handle.svg'
 
 import { Cover, Handle, HeaderContainer, PageContainer, Wrapper } from './Day.styles'

@@ -1,8 +1,9 @@
 import { styled } from 'goober'
 
 export const GlobeWrapper = styled('button')`
-  height: 70px;
-  width: 70px;
+  aspect-ratio: 1/1;
+  max-height: 80px;
+  max-width: 80px;
   border: 2px solid var(--white);
   border-radius: 50%;
   position: relative;
@@ -26,10 +27,14 @@ export const Month = styled('p')`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.3em;
+  transform: translate(-50%, -100%);
+  font-size: .9em;
   color: #bd93f9;
   font-weight: bold;
+
+  @media screen and (min-width: 450px)  {
+    font-size: 1.5em;
+  }
 `
 
 export const Container = styled('div')`

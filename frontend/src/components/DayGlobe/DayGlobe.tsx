@@ -6,7 +6,7 @@ import { calculateFillPercentage, lerp } from '/src/utils'
 import { Container, GlobeWrapper, Month } from './DayGlobe.styles'
 
 interface DayGlobeProps {
-  date: string
+  date?: string
   setOpenedDate: Dispatch<SetStateAction<string>>
   tasks: Task[]
 }
@@ -16,9 +16,9 @@ const DayGlobe: React.FC<DayGlobeProps> = ({ tasks, date, setOpenedDate }: DayGl
 
   return (
     <Container>
-      <GlobeWrapper onClick={() => setOpenedDate(date)} disabled={tasks.length === 0}>
+      <GlobeWrapper onClick={() => date && setOpenedDate(date)} disabled={tasks.length === 0}>
         <Wave fillPercentage={fillPercentage}/>
-        <Month style={{color: fillPercentage <= .2 ? 'var(--white)' : 'var(--background-dark)'}}>{new Date(date).getDate()}</Month>
+        {date && <Month style={{color: fillPercentage <= .2 ? 'var(--white)' : 'var(--background-dark)'}}>{new Date(date).getDate()}</Month>}
       </GlobeWrapper>
     </Container>
   )

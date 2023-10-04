@@ -51,16 +51,30 @@ export const ControlMonth = styled('h2')`
   letter-spacing: 5px;
 `
 
+export const MonthWrapper = styled('div')`
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+`
+
 export const MonthContainer = styled('div')`
   display: grid;
-  grid-template-columns: repeat(auto-fill, 71px);
+  grid-template-columns: repeat(7, 1fr);
   justify-content: space-between;
-  gap: 1em;
-  padding: 20px;
+  gap: .8em;
+  padding: 10px;
   max-height: calc(100vh - 95px - 82px);
   overflow-y: scroll;
+  max-width: 800px;
 `
 
 export const ControlYear = styled('span')`
   text-align: center;
+`
+
+export const DayLabel = styled('p')`
+  text-align: center;
+  font-weight: bold;
+  margin: 0;
+  width: 100%;
 `

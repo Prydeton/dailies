@@ -16,7 +16,7 @@ export const Ring = styled('div')`
   min-width: 1em;
   box-sizing: border-box;
   border-radius: 100vmax;
-  border: .125em solid black;
+  border: .125em solid var(--white);
   border-bottom-color: transparent;
   animation: ${spin} 0.8s linear infinite;
 `

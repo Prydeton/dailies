@@ -6,7 +6,7 @@ import { DayGlobe, Header, Spinner } from '/src/components'
 import { useCalendarQuery } from '/src/hooks'
 import { Calendar } from '/src/hooks/useCalendarQuery'
 
-import { ControlButton, ControlMonth, ControlsContainer, ControlsWrapper, ControlYear, MonthContainer, PageContainer } from './Calendar.styles'
+import { ControlButton, ControlMonth, ControlsContainer, ControlsWrapper, ControlYear, DayLabel, MonthContainer, MonthWrapper, PageContainer } from './Calendar.styles'
 import { Day } from '..'
 
 const Main = () => {
@@ -38,6 +38,8 @@ const Main = () => {
       .sort((a, b) => dayjs(a).isBefore(dayjs(b)) ? -1 : 1)
       .reduce((obj, key) => ({...obj, [key]: calendar[key]}), {})
   , [calendar, currentPage])
+
+  const daysOfWeek = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 
   const [openedDate, setOpenedDate] = useState<string | undefined>(undefined)
 
@@ -78,9 +80,15 @@ const Main = () => {
 
     {loading || !currentMonthTasks ?
       <Spinner center={true} /> :
-      <MonthContainer>
-        {Object.entries(currentMonthTasks).map(([date, tasks]) => (<DayGlobe key={date} date={date} setOpenedDate={() => setOpenedDate(date)} tasks={tasks} />))}
-      </MonthContainer>
+      <MonthWrapper>
+        <MonthContainer>
+          {daysOfWeek.map((d, i) => <DayLabel key={i}>{d}</DayLabel>)}
+          {Array.from({ length: dayjs(Object.keys(currentMonthTasks)[0]).day() - 1}, (_, i) => i + 1).map(i =>
+            <DayGlobe key={i} date="" setOpenedDate={() => undefined} tasks={[]} />
+          )}
+          {Object.entries(currentMonthTasks).map(([date, tasks]) => (<DayGlobe key={date} date={date} setOpenedDate={() => setOpenedDate(date)} tasks={tasks} />))}
+        </MonthContainer>
+      </MonthWrapper>
     }
 
     <Day openedDate={openedDate} tasks={openedDayTasks} closeFn={() => setOpenedDate(undefined)} />

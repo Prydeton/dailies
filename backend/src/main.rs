@@ -70,7 +70,7 @@ async fn main() {
         .with_state(shared_state)
         .layer(cors);
 
-    let addr = SocketAddr::from(([0, 0, 0, 0], 3001));
+    let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
 
     Server::bind(&addr)
         .serve(app.into_make_service())

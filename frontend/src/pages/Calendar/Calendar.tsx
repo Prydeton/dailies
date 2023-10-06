@@ -83,7 +83,7 @@ const Main = () => {
       <MonthWrapper>
         <MonthContainer>
           {daysOfWeek.map((d, i) => <DayLabel key={i}>{d}</DayLabel>)}
-          {Array.from({ length: dayjs(Object.keys(currentMonthTasks)[0]).day() - 1}, (_, i) => i + 1).map(i =>
+          {Array.from({ length: (dayjs(Object.keys(currentMonthTasks)[0]).day() + 6) % 7 }, (_, i) => i + 1).map(i =>
             <DayGlobe key={i} date="" setOpenedDate={() => undefined} tasks={[]} />
           )}
           {Object.entries(currentMonthTasks).map(([date, tasks]) => (<DayGlobe key={date} date={date} setOpenedDate={() => setOpenedDate(date)} tasks={tasks} />))}

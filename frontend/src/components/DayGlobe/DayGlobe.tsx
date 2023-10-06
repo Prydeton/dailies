@@ -18,7 +18,7 @@ const DayGlobe: React.FC<DayGlobeProps> = ({ tasks, date, setOpenedDate }: DayGl
     <Container>
       <GlobeWrapper onClick={() => date && setOpenedDate(date)} disabled={tasks.length === 0}>
         <Wave fillPercentage={fillPercentage}/>
-        {date && <Month style={{color: fillPercentage <= .2 ? 'var(--white)' : 'var(--background-dark)'}}>{new Date(date).getDate()}</Month>}
+        {date && <Month style={{color: fillPercentage <= .15 ? 'var(--white)' : 'var(--background-dark)'}}>{new Date(date).getDate()}</Month>}
       </GlobeWrapper>
     </Container>
   )

@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useMemo } from 'react'
 import { Task } from '/src/hooks/useCalendarQuery'
 import { calculateFillPercentage, lerp } from '/src/utils'
 
-import { Container, GlobeWrapper, Month } from './DayGlobe.styles'
+import { Container, Day, GlobeWrapper } from './DayGlobe.styles'
 
 interface DayGlobeProps {
   date?: string
@@ -18,7 +18,7 @@ const DayGlobe: React.FC<DayGlobeProps> = ({ tasks, date, setOpenedDate }: DayGl
     <Container>
       <GlobeWrapper onClick={() => date && setOpenedDate(date)} disabled={tasks.length === 0}>
         <Wave fillPercentage={fillPercentage}/>
-        {date && <Month style={{color: fillPercentage <= .15 ? 'var(--white)' : 'var(--background-dark)'}}>{new Date(date).getDate()}</Month>}
+        {date && <Day style={{color: fillPercentage > .35 ? 'var(--background-dark)' : 'var(--white)'}}>{new Date(date).getDate()}</Day>}
       </GlobeWrapper>
     </Container>
   )

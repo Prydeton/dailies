@@ -22,7 +22,7 @@ export const GlobeWrapper = styled('button')`
   `};
 `
 
-export const Month = styled('p')`
+export const Day = styled('p')`
   text-align: center;
   position: absolute;
   top: 50%;

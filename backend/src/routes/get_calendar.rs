@@ -69,7 +69,7 @@ pub async fn get_calendar(
     let last_display_day = current_date
         .with_day(1)
         .unwrap()
-        .with_month(current_date.month() + 1)
+        .with_month0(current_date.month() + 1)
         .unwrap()
         .pred_opt()
         .unwrap();

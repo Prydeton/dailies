@@ -72,6 +72,8 @@ pub async fn get_calendar(
         .with_month(current_date.month() + 1)
         .unwrap_or_else(|| {
             current_date
+                .with_day(1)
+                .unwrap()
                 .with_year(current_date.year() + 1)
                 .unwrap()
                 .with_month(1)

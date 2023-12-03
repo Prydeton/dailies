@@ -69,10 +69,17 @@ pub async fn get_calendar(
     let last_display_day = current_date
         .with_day(1)
         .unwrap()
-        .with_month0(current_date.month() + 1)
-        .unwrap()
+        .with_month(current_date.month() + 1)
+        .unwrap_or_else(|| {
+            current_date
+                .with_year(current_date.year() + 1)
+                .unwrap()
+                .with_month(1)
+                .unwrap()
+        })
         .pred_opt()
         .unwrap();
+
     date = current_date + Duration::days(1);
     while date <= last_display_day {
         let date_string = date.format("%Y-%m-%d").to_string();

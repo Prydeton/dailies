@@ -172,7 +172,7 @@ const EditTaskList = ({ tasks, openedDate, setIsEditing }: EditTaskListProps) =>
                   date: openedDate || '',
                   order: value.length + 1
                 }
-                onChange([...value, ...(value.length < 10) ? [newTask] : []])
+                onChange([...value, ...(value.length < 14) ? [newTask] : []])
               }}
               disabled={value.length >= 10}
               type="button"

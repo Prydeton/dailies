@@ -6,7 +6,7 @@ import { DayGlobe, Header, Spinner } from '/src/components'
 import { useCalendarQuery } from '/src/hooks'
 import { Calendar } from '/src/hooks/useCalendarQuery'
 
-import { ControlButton, ControlMonth, ControlsContainer, ControlsWrapper, ControlYear, DayLabel, MonthContainer, MonthWrapper, PageContainer } from './Calendar.styles'
+import { ControlButton, ControlMonth, ControlsContainer, ControlsWrapper, ControlYear, DayLabel, MonthContainer, MonthWrapper, PageContainer, WFHContainer } from './Calendar.styles'
 import { Day } from '..'
 
 const Main = () => {
@@ -38,6 +38,15 @@ const Main = () => {
       .sort((a, b) => dayjs(a).isBefore(dayjs(b)) ? -1 : 1)
       .reduce((obj, key) => ({...obj, [key]: calendar[key]}), {})
   , [calendar, currentPage])
+
+  const monthWFHDayCount: number | undefined = useMemo(() => calendar &&
+    Object.entries(calendar)
+      .filter(([date, tasks]) =>
+        dayjs(date).month() === currentPage.month() &&
+        tasks.some(task => task.name === 'WFH' && task.is_complete)
+      ).length
+  , [calendar]
+  )
 
   const daysOfWeek = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 
@@ -79,17 +88,23 @@ const Main = () => {
     </ControlsWrapper>
 
     {loading || !currentMonthTasks ?
-      <Spinner center={true} /> :
-      <MonthWrapper>
-        <MonthContainer>
-          {daysOfWeek.map((d, i) => <DayLabel key={i}>{d}</DayLabel>)}
-          {Array.from({ length: (dayjs(Object.keys(currentMonthTasks)[0]).day() + 6) % 7 }, (_, i) => i + 1).map(i =>
-            <DayGlobe key={i} date="" setOpenedDate={() => undefined} tasks={[]} />
-          )}
-          {Object.entries(currentMonthTasks).map(([date, tasks]) => (<DayGlobe key={date} date={date} setOpenedDate={() => setOpenedDate(date)} tasks={tasks} />))}
-        </MonthContainer>
-      </MonthWrapper>
+      <Spinner center={true} /> : <>
+        <MonthWrapper>
+          <MonthContainer>
+            {daysOfWeek.map((d, i) => <DayLabel key={i}>{d}</DayLabel>)}
+            {Array.from({ length: (dayjs(Object.keys(currentMonthTasks)[0]).day() + 6) % 7 }, (_, i) => i + 1).map(i =>
+              <DayGlobe key={i} date="" setOpenedDate={() => undefined} tasks={[]} />
+            )}
+            {Object.entries(currentMonthTasks).map(([date, tasks]) => (<DayGlobe key={date} date={date} setOpenedDate={() => setOpenedDate(date)} tasks={tasks} />))}
+          </MonthContainer>
+
+        </MonthWrapper>
+        {(monthWFHDayCount !== undefined && monthWFHDayCount !== 0) &&
+          <WFHContainer>{dayjs().date() - monthWFHDayCount}/{dayjs().date()} ({((dayjs().date() - monthWFHDayCount) / dayjs().date() * 100).toFixed(0)}%) days in office</WFHContainer>
+        }
+      </>
     }
+
 
     <Day openedDate={openedDate} tasks={openedDayTasks} closeFn={() => setOpenedDate(undefined)} />
   </PageContainer>)

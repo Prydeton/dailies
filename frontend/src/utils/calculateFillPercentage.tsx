@@ -2,7 +2,7 @@ import { Task } from '/src/hooks/useCalendarQuery'
 
 const calculateFillPercentage = (tasks: Task[]) => {
   if (tasks.length === 0) return 0
-  const completedTasks = tasks.filter(task => task.is_complete)
+  const completedTasks = tasks.filter(task => task.is_complete && task.name !== 'WFH')
   return (completedTasks.length / tasks.length)
 }
 

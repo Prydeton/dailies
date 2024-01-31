@@ -78,3 +78,10 @@ export const DayLabel = styled('p')`
   margin: 0;
   width: 100%;
 `
+
+export const WFHContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`

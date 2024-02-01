@@ -4,37 +4,37 @@ import { useLocation } from 'wouter'
 
 import { useAuth } from '/src/hooks'
 
-import { Container } from './Header.styles'
+import styles from './Header.module.css'
 import { Button } from '..'
 
-const Header: FC = () => {
+const Header = () => {
   const { signOut, session } = useAuth()
   const [location, setLocation] = useLocation()
 
   return (
-    <Container>
+    <div className={styles.container}>
       {session && location === '/' &&
-      <Button style={{position: 'absolute', left: '0' }} transparent={true} onClick={() => setLocation('/settings')} fullWidth={false}>
+      <Button style={{ position: 'absolute', left: '0' }} transparent={true} onClick={() => setLocation('/settings')} fullWidth={false}>
         <Settings />
       </Button>
       }
       {session && location === '/settings' &&
-      <Button style={{position: 'absolute', left: '0' }} transparent={true} onClick={() => setLocation('/')} fullWidth={false}>
+      <Button style={{ position: 'absolute', left: '0' }} transparent={true} onClick={() => setLocation('/')} fullWidth={false}>
         <Calendar />
       </Button>
       }
       {!session && location === '/privacy' &&
-      <Button style={{position: 'absolute', left: '0' }} transparent={true} onClick={() => setLocation('/settings')} fullWidth={false}>
+      <Button style={{ position: 'absolute', left: '0' }} transparent={true} onClick={() => setLocation('/settings')} fullWidth={false}>
         <LogIn />
       </Button>
       }
       <h1>Dailies</h1>
       {session &&
-        <Button style={{position: 'absolute', right: '0' }} transparent={true} onClick={() => signOut()} fullWidth={false}>
+        <Button style={{ position: 'absolute', right: '0' }} transparent={true} onClick={() => signOut()} fullWidth={false}>
           <LogOut />
         </Button>
       }
-    </Container>
+    </div>
   )
 }
 

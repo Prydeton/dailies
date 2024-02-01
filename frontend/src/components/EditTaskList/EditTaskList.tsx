@@ -8,7 +8,7 @@ import { GripVertical, Trash2 } from 'lucide-react'
 
 import { useCalendarQuery } from '/src/hooks'
 
-import { ButtonContainer, Container, DragHandleWrapper, List, Row, TextInput } from './EditTaskList.styles'
+import styles from './EditTaskList.module.css'
 import { Button } from '..'
 
 interface Task {
@@ -40,7 +40,8 @@ export const InputItem = ({
   task,
 }: InputItemProps) => {
   const { attributes, listeners, setNodeRef, transform, transition } = sortableProps ?? {}
-  return <Row
+  console.log(listeners)
+  return <div className={styles.row}
     ref={setNodeRef}
     style={{
       ...transform && {
@@ -50,9 +51,9 @@ export const InputItem = ({
       ...style,
     }}
   >
-    <DragHandle {...attributes} {...listeners} active={active} />
+    <DragHandle {...attributes} {...listeners} active={active} onPointerDown={e => { listeners?.onPointerDown(e); e.stopPropagation() } } />
 
-    <TextInput
+    <input className={styles.textInput}
       value={task.name}
       onChange={e => onChange?.(e.target.value)}
     />
@@ -61,7 +62,7 @@ export const InputItem = ({
       transparent
       onClick={onRemove}
     ><Trash2 /></Button>
-  </Row>
+  </div>
 }
 
 const Sortable = (props: InputItemProps) => {
@@ -90,7 +91,6 @@ const EditTaskList = ({ tasks, openedDate, setIsEditing }: EditTaskListProps) =>
     handleSubmit,
     reset,
     control,
-    formState: { isDirty },
   } = useForm<DefaultValues>({ defaultValues })
 
   useEffect(() => {
@@ -114,14 +114,14 @@ const EditTaskList = ({ tasks, openedDate, setIsEditing }: EditTaskListProps) =>
 
   const [active, setActive] = useState<InputItemProps | undefined>()
 
-  return (<form onSubmit={handleSubmit(onSaveClicked)}>
+  return (<form className={styles.form} onSubmit={handleSubmit(onSaveClicked)}>
     <Controller
       control={control}
       name="tasks"
       render={({
         field: { onChange, value }
       }) => (
-        <Container>
+        <div>
           <DndContext
             sensors={useSensors(
               useSensor(PointerSensor)
@@ -145,7 +145,7 @@ const EditTaskList = ({ tasks, openedDate, setIsEditing }: EditTaskListProps) =>
               items={value.map(c => c.id)}
               strategy={verticalListSortingStrategy}
             >
-              <List>
+              <div className={styles.list}>
                 <div>
                   {useMemo(() => value.map((item, i) => <Fragment key={item.id ?? i}>
                     <Sortable
@@ -156,34 +156,33 @@ const EditTaskList = ({ tasks, openedDate, setIsEditing }: EditTaskListProps) =>
                     />
                   </Fragment>), [value, active?.task.id])}
                 </div>
-              </List>
+              </div>
             </SortableContext>
             {createPortal(<DragOverlay zIndex={5000}>{active && <InputItem task={active.task} active />}</DragOverlay>, document.body)}
           </DndContext>
 
-          <ButtonContainer>
+          <div className={styles.buttonContainer}>
             <Button
               onClick={() => {
                 const newTask: Task = {
                   id: crypto.randomUUID(),
                   name: '',
-                  user_id: '5',
+                  user_id: '13',
                   is_complete: false,
                   date: openedDate || '',
                   order: value.length + 1
                 }
                 onChange([...value, ...(value.length < 14) ? [newTask] : []])
               }}
-              disabled={value.length >= 10}
+              disabled={value.length >= 14}
               type="button"
               secondary
             >Add</Button>
             <Button
-              disabled={!isDirty}
               primary
             >Save</Button>
-          </ButtonContainer>
-        </Container>
+          </div>
+        </div>
       )}
     />
   </form>)
@@ -193,10 +192,10 @@ interface DragHandleProps extends React.HTMLAttributes<HTMLDivElement> {
   active?: boolean
 }
 
-const DragHandle: React.FC<DragHandleProps> = ({ active, ...props }) => <DragHandleWrapper
+const DragHandle: React.FC<DragHandleProps> = ({ active, ...props }) => <div className={styles.dragHandleWrapper}
   title={!active ? 'Drag to reorder' : ''}
   data-active={active}
   {...props}
-><GripVertical /></DragHandleWrapper>
+><GripVertical /></div>
 
 export default EditTaskList

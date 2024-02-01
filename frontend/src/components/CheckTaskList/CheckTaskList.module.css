@@ -1,18 +1,20 @@
-import { styled } from 'goober'
+.wrapper {
+  overflow-y: scroll;
+}
 
-export const CheckItemContainer = styled('div')`
+.checkItemContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 2px solid var(--grey);
   padding: 10px;
-`
+}
 
-export const Name = styled('span')`
+.name {
   font-size: 1.3em;
-`
+}
 
-export const CheckButton = styled('button')`
+.checkButton {
   width: 36px;
   height: 36px;
   border: 2px solid var(--neon-green);
@@ -21,15 +23,17 @@ export const CheckButton = styled('button')`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--white);
+  color: var(--background-dark);
   padding: 0;
 
   svg {
     stroke-width: 4px;
   }
+}
 
-  &.complete {
-    background-color: var(--neon-green);
-    transition: transform .5s;
-  }
-`
+.complete {
+  background-color: var(--neon-green);
+}
+
+
+

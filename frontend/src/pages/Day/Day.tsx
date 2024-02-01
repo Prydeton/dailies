@@ -1,13 +1,13 @@
-import { Dispatch, FC, SetStateAction, useMemo, useState } from 'react'
-import { createPortal } from 'react-dom'
+import { Dispatch, SetStateAction, useMemo, useState } from 'react'
 import dayjs from 'dayjs'
 import { Edit } from 'lucide-react'
+import { Drawer } from 'vaul'
 
 import { Button, CheckTaskList, EditTaskList } from '/src/components'
 import { Task } from '/src/hooks/useCalendarQuery'
 import handle from '/src/res/handle.svg'
 
-import { Cover, Handle, HeaderContainer, PageContainer, Wrapper } from './Day.styles'
+import styles from './Day.module.css'
 
 type DayProps = {
   closeFn: Dispatch<SetStateAction<undefined>>
@@ -15,28 +15,30 @@ type DayProps = {
   tasks: Task[]
 }
 
-const Day: FC<DayProps> = ({ openedDate, tasks, closeFn }: DayProps) => {
+const Day = ({ openedDate, tasks, closeFn }: DayProps) => {
   const [isEditing, setIsEditing] = useState(false)
   const canEdit = useMemo(() => openedDate === dayjs().format('YYYY-MM-DD'), [openedDate])
 
-  return createPortal(
-    <>
-      <PageContainer className={openedDate ? 'open' : 'close'}>
-        <Wrapper>
-          <Handle onClick={() => {setIsEditing(false), closeFn(undefined)}}><img src={handle} width={40} height={24}/></Handle>
-          <HeaderContainer>
-            <h2>Tasks</h2>
-            {(canEdit && !isEditing) && <Button transparent onClick={() => setIsEditing(true)} fullWidth={false}><Edit /></Button>}
-          </HeaderContainer>
-          {isEditing
-            ? <EditTaskList tasks={tasks} openedDate={openedDate} setIsEditing={setIsEditing} />
-            : <CheckTaskList tasks={tasks} openedDate={openedDate} />
-          }
-        </Wrapper>
-      </PageContainer>
-      <Cover className={openedDate ? 'open' : 'close'} onClick={() => {setIsEditing(false), closeFn(undefined)}}></Cover>
-    </>,
-    document.body)
+  return (
+    <Drawer.Root open={!!openedDate} onClose={() => closeFn(undefined)}>
+      <Drawer.Portal>
+        <Drawer.Overlay className={styles.overlay} onClick={() => closeFn(undefined)}/>
+        <Drawer.Content className={styles.contentWrapper}>
+          <div className={styles.contentContainer}>
+            <div className={styles.handleWrapper}><img className={styles.handle} src={handle} /></div>
+            <div className={styles.header}>
+              <h2>Tasks</h2>
+              {(canEdit && !isEditing) && <Button transparent onClick={() => setIsEditing(true)} fullWidth={false}><Edit /></Button>}
+            </div>
+            {isEditing ?
+              <EditTaskList tasks={tasks} openedDate={openedDate} setIsEditing={setIsEditing} /> :
+              <CheckTaskList tasks={tasks} openedDate={openedDate} />
+            }
+          </div>
+        </Drawer.Content>
+      </Drawer.Portal>
+    </Drawer.Root>
+  )
 }
 
 export default Day

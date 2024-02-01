@@ -1,6 +1,4 @@
-import { FC } from 'react'
-
-import { SocialIcon, StyledButton } from './Button.styles'
+import styles from './Button.module.css'
 import { Spinner } from '..'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -13,9 +11,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   transparent?: boolean
 }
 
-const Button: FC<ButtonProps> = ({
+const Button = ({
   loading,
-  disabled,
   src,
   primary,
   secondary,
@@ -24,22 +21,22 @@ const Button: FC<ButtonProps> = ({
   transparent,
   children,
   ...props
-}: ButtonProps) => <StyledButton
+}: ButtonProps) => <button
   className={
     [
-      primary && 'primary',
-      secondary && 'secondary',
-      danger && 'danger',
-      disabled && 'disabled',
-      fullWidth && 'fullWidth',
-      transparent && 'transparent',
+      styles.styledButton,
+      primary && styles.primary,
+      secondary && styles.secondary,
+      danger && styles.danger,
+      fullWidth && styles.fullWidth,
+      transparent && styles.transparent,
     ].filter(Boolean).join(' ')
   }
   {...props}
 >
   {loading && <Spinner />}
-  {src && <SocialIcon src={src} />}
+  {src && <img className={styles.socialIcon} src={src} />}
   {children}
-</StyledButton>
+</button>
 
 export default Button

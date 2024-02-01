@@ -1,0 +1,51 @@
+.styledButton {
+  padding: .6em 1em;
+  border-style: none;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  font: inherit;
+  color: var(--background-dark);
+  background-color: var(--white);
+  cursor: pointer;
+
+  &:hover:not(.disabled), &:focus-visible {
+    opacity: .85;
+  }
+
+  &[disabled] {
+    opacity: .5;
+    cursor: default;
+  }
+}
+
+.socialIcon {
+  height: 32px;
+  width: 32px;
+}
+
+.primary {
+  background-color: var(--neon-green);
+  color: var(--background-dark);
+}
+
+.secondary {
+  background-color: var(--grey);
+  color: var(--white);
+}
+
+.danger {
+  background-color: var(--red);
+  color: var(--white);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.transparent {
+  color: var(--white);
+  background-color: transparent;
+}

@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useMemo } from 'react'
 import { Task } from '/src/hooks/useCalendarQuery'
 import { calculateFillPercentage, lerp } from '/src/utils'
 
-import { Container, Day, GlobeWrapper } from './DayGlobe.styles'
+import styles from './DayGlobe.module.css'
 
 interface DayGlobeProps {
   date?: string
@@ -15,12 +15,12 @@ const DayGlobe: React.FC<DayGlobeProps> = ({ tasks, date, setOpenedDate }: DayGl
   const fillPercentage = useMemo(() => calculateFillPercentage(tasks), [tasks])
 
   return (
-    <Container>
-      <GlobeWrapper onClick={() => date && setOpenedDate(date)} disabled={tasks.length === 0}>
+    <div className={styles.container}>
+      <button className={styles.globe} onClick={() => date && setOpenedDate(date)} disabled={tasks.length === 0}>
         <Wave fillPercentage={fillPercentage}/>
-        {date && <Day style={{color: fillPercentage > .35 ? 'var(--background-dark)' : 'var(--white)'}}>{new Date(date).getDate()}</Day>}
-      </GlobeWrapper>
-    </Container>
+        {date && <p className={styles.day} style={{color: fillPercentage > .35 ? 'var(--background-dark)' : 'var(--white)'}}>{new Date(date).getDate()}</p>}
+      </button>
+    </div>
   )
 }
 
@@ -28,7 +28,7 @@ interface WaveProps {
   fillPercentage: number
 }
 
-const Wave: React.FC<WaveProps> = ({ fillPercentage }: WaveProps) => {
+const Wave = ({ fillPercentage }: WaveProps) => {
   return (
     <svg
       width="100%"

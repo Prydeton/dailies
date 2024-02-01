@@ -1,6 +1,4 @@
-import { styled } from 'goober'
-
-export const Container = styled('header')`
+.container {
   background: var(--grey);
   height: 60px;
   position: relative;
@@ -11,4 +9,4 @@ export const Container = styled('header')`
   h1 { 
     margin: 0;
   }
-`
+}

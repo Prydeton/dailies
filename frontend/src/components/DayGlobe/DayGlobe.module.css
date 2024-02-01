@@ -1,6 +1,4 @@
-import { styled } from 'goober'
-
-export const GlobeWrapper = styled('button')`
+.globe {
   aspect-ratio: 1/1;
   max-height: 80px;
   max-width: 80px;
@@ -11,7 +9,7 @@ export const GlobeWrapper = styled('button')`
   padding: 0;
   background-color: transparent;
 
-  ${props => props.disabled && `
+  &[disabled] {
     opacity: .5;
     cursor: default;
     background: transparent;
@@ -19,10 +17,11 @@ export const GlobeWrapper = styled('button')`
     & p {
       opacity: .5;
     }
-  `};
-`
+  }
+}
 
-export const Day = styled('p')`
+
+.day {
   text-align: center;
   position: absolute;
   top: 50%;
@@ -35,9 +34,9 @@ export const Day = styled('p')`
   @media screen and (min-width: 450px)  {
     font-size: 1.5em;
   }
-`
-
-export const Container = styled('div')`
+}
+  
+.container {
   display: flex;
   flex-direction: column;
-`
+}

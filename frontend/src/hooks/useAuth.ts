@@ -27,6 +27,7 @@ export const useAuthStore = create<AuthStore>()((_, get) => ({
   signOut: () => supabase.auth.signOut(),
   deleteUser: async () =>  {
     const session = get().session
+
     await supabase.auth.signOut()
     return axios.delete('/user', {
       headers: {

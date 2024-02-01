@@ -6,7 +6,7 @@ import { DayGlobe, Header, Spinner } from '/src/components'
 import { useCalendarQuery } from '/src/hooks'
 import { Calendar } from '/src/hooks/useCalendarQuery'
 
-import { ControlButton, ControlMonth, ControlsContainer, ControlsWrapper, ControlYear, DayLabel, MonthContainer, MonthWrapper, PageContainer, WFHContainer } from './Calendar.styles'
+import styles from './Calendar.module.css'
 import { Day } from '..'
 
 const Main = () => {
@@ -39,14 +39,21 @@ const Main = () => {
       .reduce((obj, key) => ({...obj, [key]: calendar[key]}), {})
   , [calendar, currentPage])
 
-  const monthWFHDayCount: number | undefined = useMemo(() => calendar &&
-    Object.entries(calendar)
-      .filter(([date, tasks]) =>
-        dayjs(date).month() === currentPage.month() &&
-        tasks.some(task => task.name === 'WFH' && task.is_complete)
+  const monthOfficeDayCount: undefined | number = useMemo(() => {
+    if (!currentMonthTasks) return
+
+    const usesOfficeDay =  Object.entries(currentMonthTasks)
+      .filter(([_, tasks]) =>
+        tasks.some(task => task.name === 'Office day')
+      ).length !== 0
+
+    if (!usesOfficeDay) return
+
+    return Object.entries(currentMonthTasks)
+      .filter(([_, tasks]) =>
+        tasks.some(task => task.name === 'Office day' && task.is_complete)
       ).length
-  , [calendar]
-  )
+  }, [currentMonthTasks])
 
   const daysOfWeek = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 
@@ -54,60 +61,60 @@ const Main = () => {
 
   const openedDayTasks = useMemo(() => (openedDate && currentMonthTasks) ? currentMonthTasks[openedDate].sort((a, b) => a.order - b.order) : [], [currentMonthTasks, openedDate])
 
-  return (<PageContainer>
+  return (<main className={styles.pageContainer}>
     <Header />
-    <ControlsWrapper>
-      <ControlsContainer>
-        <ControlButton
+    <div className={styles.controlsWrapper}>
+      <div className={styles.controlsContainer}>
+        <button className={styles.controlButton}
           disabled={firstPage?.isSame(currentPage)}
           onClick={(() => setCurrentPage(firstPage || currentPage))}>
           <ChevronFirst />
-        </ControlButton>
+        </button>
 
-        <ControlButton
+        <button className={styles.controlButton}
           disabled={firstPage?.isSame(currentPage)}
           onClick={() => setCurrentPage(currentPage.subtract(1, 'month'))}>
           <ChevronLeft />
-        </ControlButton>
+        </button>
 
-        <ControlMonth>{currentPage.format('MMMM')}</ControlMonth>
+        <h2 className={styles.controlMonth}>{currentPage.format('MMMM')}</h2>
 
-        <ControlButton
+        <button className={styles.controlButton}
           disabled={lastPage?.isSame(currentPage)}
           onClick={() => setCurrentPage(currentPage.add(1, 'month'))}>
           <ChevronRight />
-        </ControlButton>
+        </button>
 
-        <ControlButton
+        <button className={styles.controlButton}
           disabled={lastPage?.isSame(currentPage)}
           onClick={(() => setCurrentPage(lastPage || currentPage))}>
           <ChevronLast />
-        </ControlButton>
-      </ControlsContainer>
-      <ControlYear>{currentPage.year()}</ControlYear>
-    </ControlsWrapper>
+        </button>
+      </div>
+      <span className={styles.controlYear}>{currentPage.year()}</span>
+    </div>
 
     {loading || !currentMonthTasks ?
       <Spinner center={true} /> : <>
-        <MonthWrapper>
-          <MonthContainer>
-            {daysOfWeek.map((d, i) => <DayLabel key={i}>{d}</DayLabel>)}
+        <div className={styles.monthWrapper}>
+          <div className={styles.monthContainer}>
+            {daysOfWeek.map((d, i) => <p className={styles.dayLabel} key={i}>{d}</p>)}
             {Array.from({ length: (dayjs(Object.keys(currentMonthTasks)[0]).day() + 6) % 7 }, (_, i) => i + 1).map(i =>
               <DayGlobe key={i} date="" setOpenedDate={() => undefined} tasks={[]} />
             )}
             {Object.entries(currentMonthTasks).map(([date, tasks]) => (<DayGlobe key={date} date={date} setOpenedDate={() => setOpenedDate(date)} tasks={tasks} />))}
-          </MonthContainer>
+          </div>
 
-        </MonthWrapper>
-        {(monthWFHDayCount !== undefined && monthWFHDayCount !== 0) &&
-          <WFHContainer>{dayjs().date() - monthWFHDayCount}/{dayjs().date()} ({((dayjs().date() - monthWFHDayCount) / dayjs().date() * 100).toFixed(0)}%) days in office</WFHContainer>
+        </div>
+        {monthOfficeDayCount !== undefined &&
+          <div className={styles.officeDayContainer}>{monthOfficeDayCount}/{dayjs().date()} ({(monthOfficeDayCount / dayjs().date() * 100).toFixed(0)}%) days in office</div>
         }
       </>
     }
 
 
     <Day openedDate={openedDate} tasks={openedDayTasks} closeFn={() => setOpenedDate(undefined)} />
-  </PageContainer>)
+  </main>)
 }
 
 export default Main

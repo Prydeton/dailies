@@ -1,24 +1,16 @@
-import { CSSProperties, FC } from 'react'
-
-import { Center, Ring } from './Spinner.styles'
+import styles from './Spinner.module.css'
 
 interface SpinnerProps {
-  size?: string | number
-  color?: string
   center?: boolean
 }
 
-const Spinner: FC<SpinnerProps> = ({
-  size = '24px',
+const Spinner = ({
   center,
-}) => {
-  const style = {
-    fontSize: size,
-  } as CSSProperties
+}: SpinnerProps) => {
 
-  if (center) return <Center><Ring style={style} /></Center>
+  if (center) return <div className={styles.center}><span className={styles.ring} /></div>
 
-  return <Ring style={style} />
+  return <span className={styles.ring} />
 }
 
 export default Spinner

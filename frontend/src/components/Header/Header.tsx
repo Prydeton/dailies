@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import { Calendar, LogIn, LogOut, Settings } from 'lucide-react'
 import { useLocation } from 'wouter'
 

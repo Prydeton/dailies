@@ -83,9 +83,6 @@ const useCalendarQuery = () => {
 
         return () => queryClient.setQueryData(['calendar'], previousCalendar)
       },
-      onSuccess: () => {
-        queryClient.invalidateQueries(['calendar'])
-      },
       onError: (error, _, rollback) => {
         console.error('Mutation failed:', error)
         if (typeof rollback === 'function') {

@@ -34,26 +34,10 @@ const Main = () => {
 
   const currentMonthTasks: Calendar | undefined = useMemo(() => calendar &&
     Object.keys(calendar)
-      .filter(date => dayjs(date).month() === currentPage.month())
+      .filter(date => dayjs(date).month() === currentPage.month() && dayjs(date).year() === currentPage.year())
       .sort((a, b) => dayjs(a).isBefore(dayjs(b)) ? -1 : 1)
       .reduce((obj, key) => ({...obj, [key]: calendar[key]}), {})
   , [calendar, currentPage])
-
-  const monthOfficeDayCount: undefined | number = useMemo(() => {
-    if (!currentMonthTasks) return
-
-    const usesOfficeDay =  Object.entries(currentMonthTasks)
-      .filter(([_, tasks]) =>
-        tasks.some(task => task.name === 'Office day')
-      ).length !== 0
-
-    if (!usesOfficeDay) return
-
-    return Object.entries(currentMonthTasks)
-      .filter(([_, tasks]) =>
-        tasks.some(task => task.name === 'Office day' && task.is_complete)
-      ).length
-  }, [currentMonthTasks])
 
   const daysOfWeek = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 
@@ -106,9 +90,6 @@ const Main = () => {
           </div>
 
         </div>
-        {monthOfficeDayCount !== undefined &&
-          <div className={styles.officeDayContainer}>{monthOfficeDayCount}/{dayjs().date()} ({(monthOfficeDayCount / dayjs().date() * 100).toFixed(0)}%) days in office</div>
-        }
       </>
     }
 

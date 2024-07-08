@@ -1,6 +1,6 @@
 // authStore.ts
 import { useEffect } from 'react'
-import { AuthError, OAuthResponse, Session } from '@supabase/supabase-js'
+import type { AuthError, OAuthResponse, Session } from '@supabase/supabase-js'
 import { useQueryClient } from '@tanstack/react-query'
 import { create } from 'zustand'
 
@@ -58,7 +58,7 @@ const useAuth = () => {
     }
   }, [])
 
-  return { session, signInWithOAuth, signOut, deleteUser }
+  return { session, signInWithOAuth, signOut, deleteUser, queryClient }
 }
 
 export default useAuth

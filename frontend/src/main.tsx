@@ -10,7 +10,7 @@ setup(createElement)
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: Infinity,
+      staleTime: Number.POSITIVE_INFINITY,
     },
   },
 })

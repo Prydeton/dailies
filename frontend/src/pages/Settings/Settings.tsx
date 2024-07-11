@@ -13,16 +13,22 @@ const Settings = () => {
     }
   }
 
-  return (session && <>
-    <Header />
-    <PageContainer>
-      <SettingsContainer>
-        <Email>{session.user.email}</Email>
-        <SignupDate>Signed up {new Date(session.user.created_at).toISOString().substring(0, 10)}</SignupDate>
-        <Button fullWidth={false} danger onClick={handleDelete}>Delete account</Button>
-      </SettingsContainer>
-    </PageContainer>
-  </>)
+  return (
+    session && (
+      <>
+        <Header />
+        <PageContainer>
+          <SettingsContainer>
+            <Email>{session.user.email}</Email>
+            <SignupDate>Signed up {new Date(session.user.created_at).toISOString().substring(0, 10)}</SignupDate>
+            <Button fullWidth={false} danger onClick={handleDelete}>
+              Delete account
+            </Button>
+          </SettingsContainer>
+        </PageContainer>
+      </>
+    )
+  )
 }
 
 export default Settings

@@ -1,22 +1,20 @@
-import React from 'react'
-import { Redirect, Route, RouteProps } from 'wouter'
+import { Redirect, Route, type RouteProps } from 'wouter'
 
 import { useAuth } from '/src/hooks'
 
-export const AuthRoute: React.FC<RouteProps> = ({ ...props }) => {
+export const AuthRoute = ({ ...props }: RouteProps) => {
   const { session } = useAuth()
   if (session?.user) {
     return <Route {...props} />
-  } else {
-    return <Redirect to="/login" />
   }
+  return <Redirect to="/login" />
 }
 
 export const NoAuthRoute: React.FC<RouteProps> = ({ ...props }) => {
   const { session } = useAuth()
+
   if (!session?.user) {
     return <Route {...props} />
-  } else {
-    return <Redirect to="/" />
   }
+  return <Redirect to="/" />
 }

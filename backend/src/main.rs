@@ -14,7 +14,10 @@ use db::connect_to_database;
 use error::ApiError;
 use jsonwebtoken::{decode, Algorithm, DecodingKey, TokenData, Validation};
 use postgrest::Postgrest;
-use routes::{delete_user::delete_user, get_calendar::get_calendar, update_day::update_day};
+use routes::{
+    delete_user::delete_user, get_calendar::get_calendar, get_month::get_month,
+    update_day::update_day,
+};
 use serde::{Deserialize, Serialize};
 use std::{env, net::SocketAddr, sync::Arc};
 use tokio::sync::Mutex;
@@ -61,6 +64,7 @@ async fn main() {
     let app = Router::new()
         .route("/ping", get(ping_handler))
         .route("/calendar", get(get_calendar))
+        .route("/month/:month_year", get(get_month))
         .route("/day", patch(update_day))
         .route("/user", delete(delete_user))
         .route_layer(middleware::from_fn_with_state(
@@ -90,6 +94,7 @@ async fn require_auth<T>(
     mut request: Request<T>,
     next: Next<T>,
 ) -> Result<Response, ApiError> {
+    println!("test");
     let auth_header = if let Some(token) = headers.get("authorization") {
         token.to_str().map_err(|_| ApiError::NotAuthorized)?
     } else {
@@ -97,6 +102,7 @@ async fn require_auth<T>(
     };
 
     if let Some(token) = auth_header.strip_prefix("Bearer ") {
+        dbg!(&auth_header);
         let token_secret = env::var("JWT_SECRET").expect("Expected JWT_SECRET in env variables");
 
         let validation = Validation::new(Algorithm::HS256);

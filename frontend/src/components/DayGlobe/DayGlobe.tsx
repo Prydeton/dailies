@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction, useMemo } from 'react'
+import { type Dispatch, type SetStateAction, useMemo } from 'react'
 
-import { Task } from '/src/hooks/useCalendarQuery'
 import { calculateFillPercentage, lerp } from '/src/utils'
+import type { Task } from '../../types'
 
 import styles from './DayGlobe.module.css'
 
@@ -16,9 +16,23 @@ const DayGlobe: React.FC<DayGlobeProps> = ({ tasks, date, setOpenedDate }: DayGl
 
   return (
     <div className={styles.container}>
-      <button className={styles.globe} onClick={() => date && setOpenedDate(date)} disabled={tasks.length === 0}>
-        <Wave fillPercentage={fillPercentage}/>
-        {date && <p className={styles.day} style={{color: fillPercentage > .35 ? 'var(--background-dark)' : 'var(--white)'}}>{new Date(date).getDate()}</p>}
+      <button
+        type="button"
+        className={styles.globe}
+        onClick={() => date && setOpenedDate(date)}
+        disabled={tasks.length === 0}
+      >
+        <Wave fillPercentage={fillPercentage} />
+        {date && (
+          <p
+            className={styles.day}
+            style={{
+              color: fillPercentage > 0.35 ? 'var(--background-dark)' : 'var(--white)',
+            }}
+          >
+            {new Date(date).getDate()}
+          </p>
+        )}
       </button>
     </div>
   )
@@ -40,11 +54,9 @@ const Wave = ({ fillPercentage }: WaveProps) => {
       shapeRendering="auto"
       fill="transparent"
     >
+      <title id="svgTitle">Goop within task globe</title>
       <defs>
-        <path
-          id="wavepath"
-          d="M 0 2000 0 500 Q 150 450 300 500 t 300 0 300 0 300 0 300 0 300 0  v1000 z"
-        />
+        <path id="wavepath" d="M 0 2000 0 500 Q 150 450 300 500 t 300 0 300 0 300 0 300 0 300 0  v1000 z" />
         <path id="motionpath" d="M -600 0 0 0" />
       </defs>
       <g>
@@ -55,7 +67,6 @@ const Wave = ({ fillPercentage }: WaveProps) => {
         </use>
       </g>
     </svg>
-
   )
 }
 

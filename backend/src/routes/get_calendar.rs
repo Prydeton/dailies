@@ -61,7 +61,7 @@ pub async fn get_calendar(
     let first_display_day = first_task_date.with_day(1).unwrap();
     let mut date = first_display_day;
     while date < first_task_date {
-        let date_string = date.format("%Y-%m-%d").to_string();
+        let date_string = date.format("%Y/%m-%d").to_string();
         calendar.insert(date_string.clone(), Vec::new());
         date += chrono::Duration::days(1)
     }

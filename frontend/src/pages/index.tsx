@@ -1,5 +1,5 @@
 export { default as Login } from './Login/Login'
 export { default as Calendar } from './Calendar/Calendar'
-export { default as Day } from './Day/Day'
+export { default as Day } from './DayDrawer/DayDrawer'
 export { default as Settings } from './Settings/Settings'
 export { default as Privacy } from './Privacy/Privacy'

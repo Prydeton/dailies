@@ -23,7 +23,7 @@ export const Title = styled('h1')`
   font-weight: bold;
 `
 
-export const Error = styled('span')`
+export const ErrorText = styled('span')`
   color: var(--red);
 `
 

@@ -1,5 +1,5 @@
-import styles from './Button.module.css'
 import { Spinner } from '..'
+import styles from './Button.module.css'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean
@@ -9,6 +9,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   danger?: boolean
   fullWidth?: boolean
   transparent?: boolean
+  alt?: string
 }
 
 const Button = ({
@@ -20,23 +21,26 @@ const Button = ({
   fullWidth = true,
   transparent,
   children,
+  alt,
   ...props
-}: ButtonProps) => <button
-  className={
-    [
+}: ButtonProps) => (
+  <button
+    className={[
       styles.styledButton,
       primary && styles.primary,
       secondary && styles.secondary,
       danger && styles.danger,
       fullWidth && styles.fullWidth,
       transparent && styles.transparent,
-    ].filter(Boolean).join(' ')
-  }
-  {...props}
->
-  {loading && <Spinner />}
-  {src && <img className={styles.socialIcon} src={src} />}
-  {children}
-</button>
+    ]
+      .filter(Boolean)
+      .join(' ')}
+    {...props}
+  >
+    {loading && <Spinner />}
+    {src && <img className={styles.socialIcon} src={src} alt={alt} />}
+    {children}
+  </button>
+)
 
 export default Button

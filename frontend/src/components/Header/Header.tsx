@@ -3,8 +3,8 @@ import { useLocation } from 'wouter'
 
 import { useAuth } from '/src/hooks'
 
-import styles from './Header.module.css'
 import { Button } from '..'
+import styles from './Header.module.css'
 
 const Header = () => {
   const { signOut, session } = useAuth()
@@ -12,27 +12,47 @@ const Header = () => {
 
   return (
     <div className={styles.container}>
-      {session && location === '/' &&
-      <Button style={{ position: 'absolute', left: '0' }} transparent={true} onClick={() => setLocation('/settings')} fullWidth={false}>
-        <Settings />
-      </Button>
-      }
-      {session && location === '/settings' &&
-      <Button style={{ position: 'absolute', left: '0' }} transparent={true} onClick={() => setLocation('/')} fullWidth={false}>
-        <Calendar />
-      </Button>
-      }
-      {!session && location === '/privacy' &&
-      <Button style={{ position: 'absolute', left: '0' }} transparent={true} onClick={() => setLocation('/settings')} fullWidth={false}>
-        <LogIn />
-      </Button>
-      }
+      {session && location === '/' && (
+        <Button
+          style={{ position: 'absolute', left: '0' }}
+          transparent={true}
+          onClick={() => setLocation('/settings')}
+          fullWidth={false}
+        >
+          <Settings />
+        </Button>
+      )}
+      {session && location === '/settings' && (
+        <Button
+          style={{ position: 'absolute', left: '0' }}
+          transparent={true}
+          onClick={() => setLocation('/')}
+          fullWidth={false}
+        >
+          <Calendar />
+        </Button>
+      )}
+      {!session && location === '/privacy' && (
+        <Button
+          style={{ position: 'absolute', left: '0' }}
+          transparent={true}
+          onClick={() => setLocation('/settings')}
+          fullWidth={false}
+        >
+          <LogIn />
+        </Button>
+      )}
       <h1>Dailies</h1>
-      {session &&
-        <Button style={{ position: 'absolute', right: '0' }} transparent={true} onClick={() => signOut()} fullWidth={false}>
+      {session && (
+        <Button
+          style={{ position: 'absolute', right: '0' }}
+          transparent={true}
+          onClick={() => signOut()}
+          fullWidth={false}
+        >
           <LogOut />
         </Button>
-      }
+      )}
     </div>
   )
 }

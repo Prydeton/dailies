@@ -26,8 +26,9 @@ const CheckTaskList = ({ day }: CheckTaskListProps) => {
                 tasks: day.tasks.map((t) => (task.id === t.id ? { ...task, is_complete: !task.is_complete } : t)),
               })
             }
-          />
-          {task.is_complete && <Check />}
+          >
+            {task.is_complete && <Check />}
+          </button>
         </div>
       ))}
     </div>

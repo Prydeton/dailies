@@ -22,13 +22,14 @@ const DayDrawer = ({ day, closeFn }: DayDrawerProps) => {
     <Drawer.Root open={!!day} onClose={() => closeFn(undefined)}>
       <Drawer.Portal>
         <Drawer.Overlay className={styles.overlay} onClick={() => closeFn(undefined)} />
-        <Drawer.Content className={styles.contentWrapper}>
+        <Drawer.Content className={styles.contentWrapper} aria-describedby={undefined}>
+          <Drawer.Close>test</Drawer.Close>
           <div className={styles.contentContainer}>
             <div className={styles.handleWrapper}>
               <img className={styles.handle} src={handle} alt="Drawer handle" />
             </div>
             <div className={styles.header}>
-              <h2>Tasks</h2>
+              <Drawer.Title>Tasks</Drawer.Title>
               {canEdit && !isEditing && (
                 <Button transparent onClick={() => setIsEditing(true)} fullWidth={false}>
                   <Edit />

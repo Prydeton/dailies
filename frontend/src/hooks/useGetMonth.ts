@@ -5,9 +5,13 @@ import { axios } from '../libs'
 import type { Month } from '../types'
 import useAuth from './useAuth'
 
-const getMonth = async (monthYear: string, session: Session | null): Promise<Month> => {
+type GetMonthInput = {
+  yearMonth: string
+  session: Session | null
+}
+const getMonth = async ({ yearMonth, session }: GetMonthInput): Promise<Month> => {
   try {
-    const response = await axios.get<Month>(`/month/${monthYear}`, {
+    const response = await axios.get<Month>(`/month/${yearMonth}`, {
       headers: {
         Authorization: `Bearer ${session?.access_token}`,
         'x-timezone': Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -24,8 +28,8 @@ const useGetMonth = (currentPage: Dayjs) => {
   const { session } = useAuth()
 
   return useQuery<Month>({
-    queryFn: ({ queryKey }) => getMonth(queryKey[1] as string, session),
-    queryKey: ['months', currentPage.format('MM-YYYY')],
+    queryFn: ({ queryKey }) => getMonth({ yearMonth: queryKey[1] as string, session }),
+    queryKey: ['months', currentPage.format('YYYY-MM')],
   })
 }
 

@@ -16,7 +16,7 @@ pub async fn get_month(
     state: State<Arc<Mutex<ApiState>>>,
     Extension(user_id): Extension<String>,
     headers: HeaderMap,
-    Path(month_year): Path<String>,
+    Path(year_month): Path<String>,
 ) -> ApiResult<GetMonthResponse> {
     dbg!("1");
     let db = &state.lock().await.db;
@@ -32,8 +32,9 @@ pub async fn get_month(
         .date_naive();
 
     dbg!("3");
-    let requested_month_string = format!("01-{}", month_year);
-    let requested_month = NaiveDate::parse_from_str(&requested_month_string, "%d-%m-%Y")
+    dbg!(format!("{}-01", year_month));
+    let requested_month_string = format!("{}-01", year_month);
+    let requested_month = NaiveDate::parse_from_str(&requested_month_string, "%Y-%m-%d")
         .map_err(|error| ApiError::PostgrestrsError(error.to_string()))?;
     dbg!("4");
     let requested_month_iso = requested_month.to_string();

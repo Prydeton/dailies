@@ -94,7 +94,6 @@ async fn require_auth<T>(
     mut request: Request<T>,
     next: Next<T>,
 ) -> Result<Response, ApiError> {
-    println!("test");
     let auth_header = if let Some(token) = headers.get("authorization") {
         token.to_str().map_err(|_| ApiError::NotAuthorized)?
     } else {

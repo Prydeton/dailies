@@ -18,12 +18,11 @@ const DayDrawer = ({ day, closeFn }: DayDrawerProps) => {
   const [isEditing, setIsEditing] = useState(false)
   const canEdit = useMemo(() => day?.date === dayjs().format('YYYY-MM-DD'), [day])
 
-  return day ? (
+  return (
     <Drawer.Root open={!!day} onClose={() => closeFn(undefined)}>
       <Drawer.Portal>
         <Drawer.Overlay className={styles.overlay} onClick={() => closeFn(undefined)} />
         <Drawer.Content className={styles.contentWrapper} aria-describedby={undefined}>
-          <Drawer.Close>test</Drawer.Close>
           <div className={styles.contentContainer}>
             <div className={styles.handleWrapper}>
               <img className={styles.handle} src={handle} alt="Drawer handle" />
@@ -36,13 +35,19 @@ const DayDrawer = ({ day, closeFn }: DayDrawerProps) => {
                 </Button>
               )}
             </div>
-            {isEditing ? <EditTaskList day={day} setIsEditing={setIsEditing} /> : <CheckTaskList day={day} />}
+            {day ? (
+              isEditing ? (
+                <EditTaskList day={day} setIsEditing={setIsEditing} />
+              ) : (
+                <CheckTaskList day={day} />
+              )
+            ) : (
+              <span>No tasks</span>
+            )}
           </div>
         </Drawer.Content>
       </Drawer.Portal>
     </Drawer.Root>
-  ) : (
-    <></>
   )
 }
 

@@ -7,7 +7,7 @@ import { ErrorText, FormWrapper, PageContainer, PrivacyPolicy, Title } from './L
 
 const Login = () => {
   const [loginError, setLoginError] = useState<string>()
-  const { signInWithOAuth, session } = useAuth()
+  const { signInWithOAuth } = useAuth()
 
   const handleSignInWithProvider = async (provider: 'google' | 'github') => {
     const { error } = await signInWithOAuth(provider)

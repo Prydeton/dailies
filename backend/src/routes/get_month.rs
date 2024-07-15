@@ -65,6 +65,7 @@ pub async fn get_month(
     let db_month_tasks: Vec<Task> = from_str(&db_month_tasks_res.text().await.unwrap())
         .map_err(|error| ApiError::PostgrestrsError(error.to_string()))?;
 
+    // GROUP
     let most_recent_task_res = db
         .from("task")
         .select("*")
@@ -79,7 +80,8 @@ pub async fn get_month(
     let most_recent_task: Vec<Task> = from_str(&most_recent_task_res.text().await.unwrap())
         .map_err(|error| ApiError::PostgrestrsError(error.to_string()))?;
 
-    let most_recent_tasks: Vec<Task> = if most_recent_task.is_empty() && db_month_tasks.is_empty() {
+    // Always create a task when user is created
+    let most_recent_tasks: Vec<Task> = if most_recent_task.is_empty() {
         vec![Task {
             id: Uuid::new_v4().to_string(),
             user_id: Uuid::new_v4().to_string(),
@@ -89,6 +91,7 @@ pub async fn get_month(
             order: 0,
         }]
     } else {
+        dbg!(&most_recent_task);
         let most_recent_tasks_res = db
             .from("task")
             .select("*")
@@ -104,31 +107,46 @@ pub async fn get_month(
     };
 
     let mut month: Vec<Day> = vec![];
-    let mut last_completed_tasks: Vec<Task> = Vec::new();
-    let mut working_day = first_day;
+    let mut last_completed_tasks: Vec<Task> = most_recent_tasks;
 
-    while working_day < last_day {
-        let working_day_string = working_day.format("%Y-%m-%d").to_string();
+    dbg!("test");
+    for day in first_day.iter_days().take(last_day.day() as usize) {
+        dbg!(&day);
+        let day_string: String = day.format("%Y-%m-%d").to_string();
         let tasks_for_day: Vec<Task> = db_month_tasks
             .iter()
-            .filter(|task| task.date == working_day_string)
+            .filter(|task| task.date == day_string)
             .cloned()
             .collect();
 
         if tasks_for_day.is_empty() {
             month.push(Day {
-                date: working_day_string,
-                tasks: last_completed_tasks.to_vec(),
+                date: day_string.clone(),
+                tasks: last_completed_tasks
+                    .iter()
+                    .map(|task| Task {
+                        id: Uuid::new_v4().to_string(),
+                        is_complete: false,
+                        date: day_string.clone(),
+                        ..task.clone()
+                    })
+                    .collect(),
             })
         } else {
             month.push(Day {
-                date: working_day_string,
-                tasks: tasks_for_day.clone(),
+                date: day_string.clone(),
+                tasks: tasks_for_day
+                    .iter()
+                    .map(|task| Task {
+                        id: Uuid::new_v4().to_string(),
+                        is_complete: false,
+                        date: day_string.clone(),
+                        ..task.clone()
+                    })
+                    .collect(),
             });
             last_completed_tasks = tasks_for_day.clone();
         }
-
-        working_day += chrono::Duration::days(1);
     }
 
     Ok(Json(GetMonthResponse { days: month }))

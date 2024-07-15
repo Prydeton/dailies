@@ -19,9 +19,21 @@ const DayDrawer = ({ day, closeFn }: DayDrawerProps) => {
   const canEdit = useMemo(() => day?.date === dayjs().format('YYYY-MM-DD'), [day])
 
   return (
-    <Drawer.Root open={!!day} onClose={() => closeFn(undefined)}>
+    <Drawer.Root
+      open={!!day}
+      onClose={() => {
+        closeFn(undefined)
+        setIsEditing(false)
+      }}
+    >
       <Drawer.Portal>
-        <Drawer.Overlay className={styles.overlay} onClick={() => closeFn(undefined)} />
+        <Drawer.Overlay
+          className={styles.overlay}
+          onClick={() => {
+            closeFn(undefined)
+            setIsEditing(false)
+          }}
+        />
         <Drawer.Content className={styles.contentWrapper} aria-describedby={undefined}>
           <div className={styles.contentContainer}>
             <div className={styles.handleWrapper}>

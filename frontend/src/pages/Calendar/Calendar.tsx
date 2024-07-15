@@ -18,8 +18,8 @@ const Main = () => {
   const daysOfWeek = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 
   const { isLoading, data: month } = useGetMonth(currentPage)
-  console.log({ currentPage: currentPage.format('YYYY-MM') })
-  useEffect(() => setFirstPage(dayjs(session?.user.created_at).startOf('month')), [session])
+
+  useEffect(() => setFirstPage(dayjs(session?.user.created_at).startOf('month').subtract(10, 'month')), [session])
 
   const openedDay = useMemo(() => month?.days.filter((day) => day.date === openedDate)[0], [month, openedDate])
 

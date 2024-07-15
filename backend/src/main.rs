@@ -101,7 +101,6 @@ async fn require_auth<T>(
     };
 
     if let Some(token) = auth_header.strip_prefix("Bearer ") {
-        dbg!(&auth_header);
         let token_secret = env::var("JWT_SECRET").expect("Expected JWT_SECRET in env variables");
 
         let validation = Validation::new(Algorithm::HS256);

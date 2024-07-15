@@ -80,18 +80,7 @@ pub async fn get_month(
     let most_recent_task: Vec<Task> = from_str(&most_recent_task_res.text().await.unwrap())
         .map_err(|error| ApiError::PostgrestrsError(error.to_string()))?;
 
-    // Always create a task when user is created
-    let most_recent_tasks: Vec<Task> = if most_recent_task.is_empty() {
-        vec![Task {
-            id: Uuid::new_v4().to_string(),
-            user_id: Uuid::new_v4().to_string(),
-            name: "Welcome!".to_string(),
-            is_complete: false,
-            date: current_date.to_string(),
-            order: 0,
-        }]
-    } else {
-        dbg!(&most_recent_task);
+    let most_recent_tasks = if most_recent_task.len() != 0 {
         let most_recent_tasks_res = db
             .from("task")
             .select("*")
@@ -104,48 +93,49 @@ pub async fn get_month(
 
         from_str(&most_recent_tasks_res.text().await.unwrap())
             .map_err(|error| ApiError::PostgrestrsError(error.to_string()))?
+    } else {
+        vec![]
     };
 
     let mut month: Vec<Day> = vec![];
     let mut last_completed_tasks: Vec<Task> = most_recent_tasks;
 
-    dbg!("test");
     for day in first_day.iter_days().take(last_day.day() as usize) {
         dbg!(&day);
         let day_string: String = day.format("%Y-%m-%d").to_string();
-        let tasks_for_day: Vec<Task> = db_month_tasks
-            .iter()
-            .filter(|task| task.date == day_string)
-            .cloned()
-            .collect();
 
-        if tasks_for_day.is_empty() {
+        if day > current_date {
             month.push(Day {
-                date: day_string.clone(),
-                tasks: last_completed_tasks
-                    .iter()
-                    .map(|task| Task {
-                        id: Uuid::new_v4().to_string(),
-                        is_complete: false,
-                        date: day_string.clone(),
-                        ..task.clone()
-                    })
-                    .collect(),
+                date: day_string,
+                tasks: vec![],
             })
         } else {
-            month.push(Day {
-                date: day_string.clone(),
-                tasks: tasks_for_day
-                    .iter()
-                    .map(|task| Task {
-                        id: Uuid::new_v4().to_string(),
-                        is_complete: false,
-                        date: day_string.clone(),
-                        ..task.clone()
-                    })
-                    .collect(),
-            });
-            last_completed_tasks = tasks_for_day.clone();
+            let tasks_for_day: Vec<Task> = db_month_tasks
+                .iter()
+                .filter(|task| task.date == day_string)
+                .cloned()
+                .collect();
+
+            if tasks_for_day.is_empty() {
+                month.push(Day {
+                    date: day_string.clone(),
+                    tasks: last_completed_tasks
+                        .iter()
+                        .map(|task| Task {
+                            id: Uuid::new_v4().to_string(),
+                            is_complete: false,
+                            date: day_string.clone(),
+                            ..task.clone()
+                        })
+                        .collect(),
+                })
+            } else {
+                month.push(Day {
+                    date: day_string.clone(),
+                    tasks: tasks_for_day.clone(),
+                });
+                last_completed_tasks = tasks_for_day.clone();
+            }
         }
     }
 

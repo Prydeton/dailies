@@ -8,8 +8,7 @@ import { ErrorText, FormWrapper, PageContainer, PrivacyPolicy, Title } from './L
 const Login = () => {
   const [loginError, setLoginError] = useState<string>()
   const { signInWithOAuth, session } = useAuth()
-  console.log('here')
-  console.log(session)
+
   const handleSignInWithProvider = async (provider: 'google' | 'github') => {
     const { error } = await signInWithOAuth(provider)
     if (error) setLoginError(error.message)

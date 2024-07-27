@@ -13,6 +13,4 @@ Visit the [contributing guide](./CONTRIBUTING.md) for info on running locally an
 
 ### Shoutouts
 
-
-
 - <img src="https://github.com/GRA0007.png" alt="GRA0007 Icon" width="25" height="25" style="border-radius: 50%;"> [GRA0007](https://github.com/GRA0007) and <img src="https://raw.githubusercontent.com/GRA0007/crab.fit/main/frontend/public/logo192.png" alt="Crabfit Icon" width="25" height="25" style="border-radius: 50%;"> [Crabfit](https://github.com/GRA0007/crab.fit/)

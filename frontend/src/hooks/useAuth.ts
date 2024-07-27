@@ -1,9 +1,7 @@
 import type { AuthError, OAuthResponse, Session } from '@supabase/supabase-js'
 import { useQueryClient } from '@tanstack/react-query'
-// authStore.ts
 import { useEffect } from 'react'
 import { create } from 'zustand'
-
 import { env } from '/src/config'
 import { axios, supabase } from '/src/libs'
 

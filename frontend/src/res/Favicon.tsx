@@ -1,5 +1,5 @@
-import type { Day } from '../types'
 import { calculateFillPercentage, lerp } from '/src/utils'
+import type { Day } from '../types'
 
 export const Favicon = (day: Day | undefined) => {
   const emptyY = 250

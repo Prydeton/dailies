@@ -1,5 +1,4 @@
 import { Redirect, Route, type RouteProps } from 'wouter'
-
 import { useAuth } from '/src/hooks'
 
 export const AuthRoute = ({ ...props }: RouteProps) => {

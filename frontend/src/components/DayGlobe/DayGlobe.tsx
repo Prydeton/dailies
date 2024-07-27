@@ -1,8 +1,6 @@
 import { type Dispatch, type SetStateAction, useMemo } from 'react'
-
 import { calculateFillPercentage, lerp } from '/src/utils'
 import type { Task } from '../../types'
-
 import styles from './DayGlobe.module.css'
 
 interface DayGlobeProps {

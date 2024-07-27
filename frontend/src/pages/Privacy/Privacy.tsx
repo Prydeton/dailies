@@ -1,5 +1,4 @@
 import { Header } from '/src/components'
-
 import styles from './Privacy.module.css'
 
 const Privacy = () => (

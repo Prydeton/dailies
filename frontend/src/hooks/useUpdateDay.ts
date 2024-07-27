@@ -8,6 +8,7 @@ type UpdateDayInput = {
   day: Day
   session: Session | null
 }
+
 export const updateDay = async ({ day: { date, tasks }, session }: UpdateDayInput) => {
   const updateDayData = {
     date,

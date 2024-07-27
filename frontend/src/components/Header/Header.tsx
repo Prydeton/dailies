@@ -1,8 +1,6 @@
 import { Calendar, LogIn, LogOut, Settings } from 'lucide-react'
 import { useLocation } from 'wouter'
-
 import { useAuth } from '/src/hooks'
-
 import { Button } from '..'
 import styles from './Header.module.css'
 

@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { Route, Router, Switch } from 'wouter'
 import { Redirect } from 'wouter'
-
 import { useAuth } from './hooks'
 import { Calendar, Login, Privacy, Settings } from './pages'
 import { setFavicon } from './utils'

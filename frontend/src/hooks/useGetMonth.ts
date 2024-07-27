@@ -9,6 +9,7 @@ type GetMonthInput = {
   yearMonth: string
   session: Session | null
 }
+
 const getMonth = async ({ yearMonth, session }: GetMonthInput): Promise<Month> => {
   try {
     const response = await axios.get<Month>(`/month/${yearMonth}`, {

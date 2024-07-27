@@ -5,7 +5,6 @@ import { GripVertical, Trash2 } from 'lucide-react'
 import { type Dispatch, Fragment, type SetStateAction, useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
-
 import { useUpdateDay } from '/src/hooks'
 import { Button } from '..'
 import type { Day } from '../../types'

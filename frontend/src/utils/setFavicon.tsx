@@ -1,5 +1,5 @@
-import type { Day } from '../types'
 import { Favicon } from '/src/res/Favicon'
+import type { Day } from '../types'
 
 const setFavicon = () => {
   const day: Day = { date: '', tasks: [] }

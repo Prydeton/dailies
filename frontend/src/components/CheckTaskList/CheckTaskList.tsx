@@ -1,8 +1,6 @@
 import { Check } from 'lucide-react'
-
-import type { Day } from '../../types'
-
 import { useUpdateDay } from '/src/hooks'
+import type { Day } from '../../types'
 import styles from './CheckTaskList.module.css'
 
 interface CheckTaskListProps {

@@ -191,7 +191,7 @@ interface DragHandleProps extends React.HTMLAttributes<HTMLDivElement> {
   active?: boolean
 }
 
-const DragHandle: React.FC<DragHandleProps> = ({ active, ...props }) => (
+const DragHandle = ({ active, ...props }: DragHandleProps) => (
   <div className={styles.dragHandleWrapper} title={!active ? 'Drag to reorder' : ''} data-active={active} {...props}>
     <GripVertical />
   </div>

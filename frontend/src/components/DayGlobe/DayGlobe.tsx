@@ -9,7 +9,7 @@ interface DayGlobeProps {
   tasks: Task[]
 }
 
-const DayGlobe: React.FC<DayGlobeProps> = ({ tasks, date, setOpenedDate }: DayGlobeProps) => {
+const DayGlobe = ({ tasks, date, setOpenedDate }: DayGlobeProps) => {
   const fillPercentage = useMemo(() => calculateFillPercentage(tasks), [tasks])
 
   return (

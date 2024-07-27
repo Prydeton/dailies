@@ -9,7 +9,7 @@ export const AuthRoute = ({ ...props }: RouteProps) => {
   return <Redirect to="/login" />
 }
 
-export const NoAuthRoute: React.FC<RouteProps> = ({ ...props }) => {
+export const NoAuthRoute = ({ ...props }: RouteProps) => {
   const { session } = useAuth()
 
   if (!session?.user) {

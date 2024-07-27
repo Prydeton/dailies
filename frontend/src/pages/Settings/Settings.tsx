@@ -1,7 +1,6 @@
 import { Button, Header } from '/src/components'
 import { useAuth } from '/src/hooks'
-
-import { Email, PageContainer, SettingsContainer, SignupDate } from './Settings.styles'
+import styles from './Settings.module.css'
 
 const Settings = () => {
   const { session, deleteUser } = useAuth()
@@ -17,15 +16,17 @@ const Settings = () => {
     session && (
       <>
         <Header />
-        <PageContainer>
-          <SettingsContainer>
-            <Email>{session.user.email}</Email>
-            <SignupDate>Signed up {new Date(session.user.created_at).toISOString().substring(0, 10)}</SignupDate>
+        <main className={styles.pageContainer}>
+          <div className={styles.settingsContainer}>
+            <span className={styles.email}>{session.user.email}</span>
+            <span className={styles.signupDate}>
+              Signed up {new Date(session.user.created_at).toISOString().substring(0, 10)}
+            </span>
             <Button fullWidth={false} danger onClick={handleDelete}>
               Delete account
             </Button>
-          </SettingsContainer>
-        </PageContainer>
+          </div>
+        </main>
       </>
     )
   )

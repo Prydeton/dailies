@@ -1,0 +1,25 @@
+.pageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex: .6;
+}
+
+.settingsContainer {
+    width: 20em;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.email {
+    font-size: 1.2em;
+}
+
+.signupDate {
+    font-size: .8em;
+}

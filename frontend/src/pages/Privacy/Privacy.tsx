@@ -1,11 +1,11 @@
 import { Header } from '/src/components'
 
-import { PageContainer } from './Privacy.styles'
+import styles from './Privacy.module.css'
 
 const Privacy = () => (
   <>
     <Header />
-    <PageContainer>
+    <main className={styles.pageContainer}>
       <h2>Privacy Policy</h2>
       <p>
         This SERVICE is provided by Maxwell Reid at no cost and is intended for use as is.This page is used to inform
@@ -63,7 +63,7 @@ const Privacy = () => (
         If you have any questions or suggestions about the Privacy Policy, do not hesitate to contact me at
         maxwellreid.tech@gmail.com.
       </p>
-    </PageContainer>
+    </main>
   </>
 )
 

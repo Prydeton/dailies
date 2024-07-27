@@ -28,9 +28,10 @@ const getMonth = async ({ yearMonth, session }: GetMonthInput): Promise<Month> =
 const useGetMonth = (currentPage: Dayjs) => {
   const { session } = useAuth()
 
-  return useQuery<Month>({
+  return useQuery<Month | undefined>({
     queryFn: ({ queryKey }) => getMonth({ yearMonth: queryKey[1] as string, session }),
     queryKey: ['months', currentPage.format('YYYY-MM')],
+    enabled: !!session,
   })
 }
 

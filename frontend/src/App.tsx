@@ -1,18 +1,23 @@
 import { useEffect } from 'react'
 import { Route, Router, Switch } from 'wouter'
 import { Redirect } from 'wouter'
-import { useAuth } from './hooks'
 import { Calendar, Login, Privacy, Settings } from './pages'
-import { setFavicon } from './utils'
+import { calculateFillPercentage, setFavicon } from './utils'
 import { AuthRoute, NoAuthRoute } from './utils/AuthRoutes'
 import './App.css'
+import dayjs from 'dayjs'
+import { useGetMonth } from './hooks'
 
 const App = () => {
-  const { session } = useAuth()
+  const month = useGetMonth(dayjs())
 
   useEffect(() => {
-    session ? setFavicon() : setFavicon()
-  }, [session])
+    month.data
+      ? setFavicon(
+          calculateFillPercentage(month.data.days.filter((day) => day.date === dayjs().format('YYYY-MM-DD'))[0].tasks),
+        )
+      : setFavicon(0.5)
+  }, [month])
 
   return (
     <Router>

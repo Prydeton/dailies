@@ -46,7 +46,7 @@ const useAuth = () => {
   useEffect(() => {
     const handleAuthChange = (_: string, session: Session | null) => {
       useAuthStore.setState({ session })
-      if (!session) queryClient.setQueryData(['calendar'], undefined)
+      if (!session) queryClient.clear()
     }
 
     const authSubscription = supabase.auth.onAuthStateChange(handleAuthChange)

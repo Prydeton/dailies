@@ -1,16 +1,10 @@
-import { calculateFillPercentage, lerp } from '/src/utils'
-import type { Day } from '../types'
+import { lerp } from '/src/utils'
 
-export const Favicon = (day: Day | undefined) => {
+export const Favicon = (fillPercentage: number) => {
   const emptyY = 250
   const fullY = -250
 
-  const calculateLiquidY = (day: Day | undefined) => {
-    const fillPercentage = day ? calculateFillPercentage(day.tasks) : 0.5
-    return lerp(emptyY, fullY, fillPercentage)
-  }
-
-  const liquidY = calculateLiquidY(day)
+  const liquidY = lerp(emptyY, fullY, fillPercentage)
 
   return `<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g clip-path="url(#clip)">

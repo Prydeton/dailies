@@ -62,7 +62,6 @@
   gap: .8em;
   padding: 10px;
   max-height: calc(100vh - 95px - 82px);
-  overflow-y: scroll;
   max-width: 800px;
 }
 

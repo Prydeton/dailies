@@ -101,7 +101,6 @@ pub async fn get_month(
     let mut last_completed_tasks: Vec<Task> = most_recent_tasks;
 
     for day in first_day.iter_days().take(last_day.day() as usize) {
-        dbg!(&day);
         let day_string: String = day.format("%Y-%m-%d").to_string();
 
         if day > current_date {

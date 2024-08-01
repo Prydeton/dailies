@@ -50,11 +50,3 @@ pub struct UpdateDayResponse {
 pub struct DeleteUserResponse {
     pub user_id: String,
 }
-
-#[derive(Serialize, Deserialize)]
-pub struct GetCalendarResponse {
-    pub calendar: Calendar,
-}
-
-#[derive(Clone, Serialize, Deserialize)]
-pub struct Calendar(pub HashMap<String, Vec<Task>>);

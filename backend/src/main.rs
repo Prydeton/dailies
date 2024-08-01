@@ -14,10 +14,7 @@ use db::connect_to_database;
 use error::ApiError;
 use jsonwebtoken::{decode, Algorithm, DecodingKey, TokenData, Validation};
 use postgrest::Postgrest;
-use routes::{
-    delete_user::delete_user, get_calendar::get_calendar, get_month::get_month,
-    update_day::update_day,
-};
+use routes::{delete_user::delete_user, get_month::get_month, update_day::update_day};
 use serde::{Deserialize, Serialize};
 use std::{env, net::SocketAddr, sync::Arc};
 use tokio::sync::Mutex;
@@ -63,7 +60,6 @@ async fn main() {
 
     let app = Router::new()
         .route("/ping", get(ping_handler))
-        .route("/calendar", get(get_calendar))
         .route("/month/:month_year", get(get_month))
         .route("/day", patch(update_day))
         .route("/user", delete(delete_user))

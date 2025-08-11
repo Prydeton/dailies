@@ -71,7 +71,7 @@ pub async fn get_month(
         .select("*")
         .eq("user_id", &user_id)
         .lt("date", first_day.format("%Y-%m-%d").to_string())
-        .order("date")
+        .order("date.desc") // Change this line
         .limit(1)
         .execute()
         .await

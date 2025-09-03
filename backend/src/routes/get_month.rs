@@ -71,7 +71,7 @@ pub async fn get_month(
         .select("*")
         .eq("user_id", &user_id)
         .lt("date", first_day.format("%Y-%m-%d").to_string())
-        .order("date.desc") // Change this line
+        .order("date.desc,order.desc") // Change this line
         .limit(1)
         .execute()
         .await
@@ -86,7 +86,7 @@ pub async fn get_month(
             .select("*")
             .eq("user_id", &user_id)
             .eq("date", &most_recent_task.get(0).unwrap().date)
-            .order("date")
+            .order("date,order")
             .execute()
             .await
             .map_err(|error| ApiError::PostgrestrsError(error.to_string()))?;

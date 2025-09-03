@@ -5,9 +5,9 @@
   "display": "standalone",
   "name": "Dailies",
   "orientation": "portrait",
-  "scope": "https://dailies.maxwellreid.tech/",
+  "scope": "https://dailies.maxreid.dev/",
   "short_name": "Dailies",
-  "start_url": "https://dailies.maxwellreid.tech/",
+  "start_url": "https://dailies.maxreid.dev/",
   "theme_color": "#232530",
   "categories": [
     "productivity",
@@ -56,12 +56,12 @@
   "shortcuts": [
     {
       "name": "Login",
-      "url": "https://dailies.maxwellreid.tech/login",
+      "url": "https://dailies.maxreid.dev/login",
       "description": "Login to your account"
     },
     {
       "name": "Calendar",
-      "url": "https://dailies.maxwellreid.tech/",
+      "url": "https://dailies.maxreid.dev/",
       "description": "View the calendar"
     }
   ],
